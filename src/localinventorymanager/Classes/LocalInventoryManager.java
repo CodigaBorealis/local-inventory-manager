@@ -14,8 +14,9 @@ public class LocalInventoryManager {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-         Item test=new Item.Builder(12,"casa",3.4f,true).category("da").build();
-    System.out.println(test.toString());  
+        App app=new App();
+        app.setTitle("Local inventory manager");
+        app.setVisible(true);
     }
       
 }
