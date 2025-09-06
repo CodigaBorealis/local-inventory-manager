@@ -19,7 +19,7 @@ public class Item {
     private boolean status;
     private String imagePath;
     private int stockBound;
-    String supplier;
+    private String supplier;
     private Item(Builder builder){
         this.name=builder.name;
         this.description=builder.description;
@@ -31,6 +31,92 @@ public class Item {
         this.stockBound=builder.stockBound;
         this.supplier=builder.supplier;
         this.id=builder.id;
+    
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" + "name=" + name + ", description=" + description + ", category=" + category + ", stock=" + stock + ", price=" + price + ", id=" + id + ", status=" + status + ", imagePath=" + imagePath + ", stockBound=" + stockBound + ", supplier=" + supplier + '}';
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public float getPrice() {
+        return price;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public int getStockBound() {
+        return stockBound;
+    }
+
+    public String getSupplier() {
+        return supplier;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public void setStockBound(int stockBound) {
+        this.stockBound = stockBound;
+    }
+
+    public void setSupplier(String supplier) {
+        this.supplier = supplier;
     }
     public static class Builder{
         //must have
@@ -87,6 +173,11 @@ public class Item {
     
         this.supplier=supplier;
         return this;
+    
+    }
+    public Item build(){
+        
+        return new Item(this);
     
     }
             }
