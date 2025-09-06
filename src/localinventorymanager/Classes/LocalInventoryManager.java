@@ -17,5 +17,5 @@ public class LocalInventoryManager {
          Item test=new Item.Builder(12,"casa",3.4f,true).category("da").build();
     System.out.println(test.toString());  
     }
-    
+      
 }
