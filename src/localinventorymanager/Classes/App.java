@@ -7,6 +7,9 @@ package localinventorymanager.Classes;
 import java.awt.Color;
 import java.awt.Cursor;
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 /**
  *
  * @author XD
@@ -20,10 +23,18 @@ public class App extends javax.swing.JFrame {
     private final Cursor NORMAL=new Cursor(Cursor.DEFAULT_CURSOR);
     private final int MAX_WINDOWS=2;
     private int openWindows=1;
+    private int nextId=1;
+    private Map <Integer, Item>inventory=new HashMap<>();//key=name of the item; value=the object itself
     /**
      * Creates new form App
      */
     public App() {
+        
+        for(int x=0;x<12;x++){
+            int id=nextId++;
+        inventory.put(id, new Item.Builder(id, "cookies "+x,12.3f, true).build());
+      
+        }
         
         initComponents();
     }
@@ -1156,6 +1167,9 @@ public class App extends javax.swing.JFrame {
 
     private void addProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductMouseClicked
         // TODO add your handling code here:
+        inventory.forEach((key, value) -> {
+    System.out.println("Key: " + key + ", Value: " + value.getId());
+});
         if(!name.getText().isEmpty() && isFloat(price.getText())){
             //TODO
         

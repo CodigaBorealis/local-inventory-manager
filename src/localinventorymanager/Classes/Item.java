@@ -7,10 +7,17 @@ package localinventorymanager.Classes;
 import java.time.LocalDateTime;
 
 /**
+ * Represents an item in the inventory.
+ * Instances should be created using the{@link Builder}.
  *
- * @author XD
+ * <p>Example usage:</p>
+ * <pre>
+ *     Item item = new Item("Cookie", 0.99f,...args);
+ * </pre>
+ *
+ * @author CodigaBorealis
+ * @version 1.0
  */
-
 public class Item {
     private String name;
     private String description;
@@ -24,6 +31,7 @@ public class Item {
     private String supplier;
     private Employee lastMod;
     private LocalDateTime lastModTime;
+    
     private Item(Builder builder){
         this.name=builder.name;
         this.description=builder.description;
@@ -122,6 +130,9 @@ public class Item {
     public void setSupplier(String supplier) {
         this.supplier = supplier;
     }
+ /**
+ * Builder for creating {@code Item} instances.
+ */
     public static class Builder{
         //must have
         private int id;
