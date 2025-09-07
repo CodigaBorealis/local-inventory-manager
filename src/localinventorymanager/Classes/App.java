@@ -12,10 +12,12 @@ import javax.swing.*;
  * @author XD
  */
 public class App extends javax.swing.JFrame {
-    Color white=new Color(255,255,255);
-    Color hoverColor=new Color(99, 190, 255);
-    Color originalTextColor=new Color(0,102,204);
-    Cursor hand=new Cursor(Cursor.HAND_CURSOR);
+    final Color WHITE=new Color(255,255,255);
+    final Color RED=new Color(255,0,0);
+    final Color HOVERCOLOR=new Color(99, 190, 255);
+    final Color ORIGINALTEXTCOLOR=new Color(0,102,204);
+    final Cursor HAND=new Cursor(Cursor.HAND_CURSOR);
+    final Cursor NORMAL=new Cursor(Cursor.DEFAULT_CURSOR);
     /**
      * Creates new form App
      */
@@ -53,6 +55,10 @@ public class App extends javax.swing.JFrame {
         quickSellTxt = new javax.swing.JLabel();
         manage = new javax.swing.JPanel();
         manageTxt = new javax.swing.JLabel();
+        logout = new javax.swing.JPanel();
+        logoutTxt = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         jRadioButton1.setText("jRadioButton1");
 
@@ -67,9 +73,16 @@ public class App extends javax.swing.JFrame {
         mainContent.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         products.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            String[] strings = { "Item 1", "Item2", "Item3" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
+        });
+        products.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        products.setToolTipText("");
+        products.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                productsMouseClicked(evt);
+            }
         });
         jScrollPane1.setViewportView(products);
 
@@ -78,12 +91,11 @@ public class App extends javax.swing.JFrame {
         imagePane.setBackground(new java.awt.Color(255, 255, 255));
         imagePane.setLayout(new java.awt.GridLayout());
 
-        productImage.setText("imagen");
+        productImage.setText("Product");
         imagePane.add(productImage);
 
-        mainContent.add(imagePane, new org.netbeans.lib.awtextra.AbsoluteConstraints(516, 124, 382, 249));
+        mainContent.add(imagePane, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 280, 140, 130));
 
-        searchBar.setText("Search Product");
         searchBar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 searchBarMouseClicked(evt);
@@ -145,6 +157,17 @@ public class App extends javax.swing.JFrame {
         buttonsPane.setForeground(new java.awt.Color(102, 255, 102));
 
         quickStock.setBackground(new java.awt.Color(255, 255, 255));
+        quickStock.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                quickStockMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                quickStockMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                quickStockMouseExited(evt);
+            }
+        });
         quickStock.setLayout(new java.awt.GridLayout());
 
         quickStockTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -153,6 +176,17 @@ public class App extends javax.swing.JFrame {
         quickStock.add(quickStockTxt);
 
         quickSell.setBackground(new java.awt.Color(255, 255, 255));
+        quickSell.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                quickSellMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                quickSellMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                quickSellMouseExited(evt);
+            }
+        });
         quickSell.setLayout(new java.awt.GridLayout());
 
         quickSellTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -161,6 +195,17 @@ public class App extends javax.swing.JFrame {
         quickSell.add(quickSellTxt);
 
         manage.setBackground(new java.awt.Color(255, 255, 255));
+        manage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                manageMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                manageMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                manageMouseExited(evt);
+            }
+        });
         manage.setLayout(new java.awt.GridLayout());
 
         manageTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -168,12 +213,33 @@ public class App extends javax.swing.JFrame {
         manageTxt.setText("Manage");
         manage.add(manageTxt);
 
+        logout.setBackground(new java.awt.Color(255, 255, 255));
+        logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                logoutMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                logoutMouseExited(evt);
+            }
+        });
+        logout.setLayout(new java.awt.GridLayout());
+
+        logoutTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        logoutTxt.setForeground(new java.awt.Color(0, 102, 204));
+        logoutTxt.setText("Logout");
+        logout.add(logoutTxt);
+
         javax.swing.GroupLayout buttonsPaneLayout = new javax.swing.GroupLayout(buttonsPane);
         buttonsPane.setLayout(buttonsPaneLayout);
         buttonsPaneLayout.setHorizontalGroup(
             buttonsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonsPaneLayout.createSequentialGroup()
-                .addContainerGap(511, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 395, Short.MAX_VALUE)
                 .addComponent(quickStock, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(quickSell, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -183,15 +249,36 @@ public class App extends javax.swing.JFrame {
         );
         buttonsPaneLayout.setVerticalGroup(
             buttonsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buttonsPaneLayout.createSequentialGroup()
-                .addGroup(buttonsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(quickSell, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-                    .addComponent(quickStock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(manage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(buttonsPaneLayout.createSequentialGroup()
+                .addGroup(buttonsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(quickSell, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addComponent(quickStock, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(manage, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(logout, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         mainContent.add(buttonsPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 459, -1, 40));
+
+        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane2.setToolTipText("");
+        jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setLineWrap(true);
+        jTextArea1.setRows(5);
+        jTextArea1.setText("tgretggfdsfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        jTextArea1.setWrapStyleWord(true);
+        jTextArea1.setFocusable(false);
+        jTextArea1.setRequestFocusEnabled(false);
+        jTextArea1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jTextArea1MouseEntered(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTextArea1);
+
+        mainContent.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 120, 380, 150));
 
         root.add(mainContent, java.awt.BorderLayout.CENTER);
 
@@ -217,13 +304,81 @@ public class App extends javax.swing.JFrame {
 
     private void searchButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseEntered
         // TODO add your handling code here:
-        buttonHoverBehaviour(searchButton,searchButtonTxt,hoverColor,white);
+        buttonHoverBehaviour(searchButton,searchButtonTxt,HOVERCOLOR,WHITE);
     }//GEN-LAST:event_searchButtonMouseEntered
 
     private void searchButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseExited
         // TODO add your handling code here:
-        buttonExitBehaviour(searchButton,searchButtonTxt,white,originalTextColor);
+        buttonExitBehaviour(searchButton,searchButtonTxt,WHITE,ORIGINALTEXTCOLOR);
     }//GEN-LAST:event_searchButtonMouseExited
+
+    private void quickStockMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickStockMouseEntered
+        // TODO add your handling code here:
+        buttonHoverBehaviour(quickStock,quickStockTxt,HOVERCOLOR,WHITE);
+    }//GEN-LAST:event_quickStockMouseEntered
+
+    private void quickStockMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickStockMouseExited
+        // TODO add your handling code here:
+        buttonExitBehaviour(quickStock,quickStockTxt,WHITE,ORIGINALTEXTCOLOR);
+    }//GEN-LAST:event_quickStockMouseExited
+
+    private void quickSellMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickSellMouseEntered
+        // TODO add your handling code here:
+         buttonHoverBehaviour(quickSell,quickSellTxt,HOVERCOLOR,WHITE);
+    }//GEN-LAST:event_quickSellMouseEntered
+
+    private void quickSellMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickSellMouseExited
+        // TODO add your handling code here:
+        buttonExitBehaviour(quickSell,quickSellTxt,WHITE,ORIGINALTEXTCOLOR);
+    }//GEN-LAST:event_quickSellMouseExited
+
+    private void manageMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageMouseEntered
+        // TODO add your handling code here:
+        buttonHoverBehaviour(manage,manageTxt,HOVERCOLOR,WHITE);
+    }//GEN-LAST:event_manageMouseEntered
+
+    private void manageMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageMouseExited
+        // TODO add your handling code here:
+        buttonExitBehaviour(manage,manageTxt,WHITE,ORIGINALTEXTCOLOR);
+    }//GEN-LAST:event_manageMouseExited
+
+    private void logoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseEntered
+        // TODO add your handling code here:
+        buttonHoverBehaviour(logout,logoutTxt,RED,WHITE);
+        
+    }//GEN-LAST:event_logoutMouseEntered
+
+    private void logoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseExited
+        // TODO add your handling code here:
+        buttonExitBehaviour(logout,logoutTxt,WHITE,ORIGINALTEXTCOLOR);
+        
+    }//GEN-LAST:event_logoutMouseExited
+
+    private void productsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productsMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_productsMouseClicked
+
+    private void quickStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickStockMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_quickStockMouseClicked
+
+    private void manageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_manageMouseClicked
+
+    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_logoutMouseClicked
+
+    private void quickSellMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickSellMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_quickSellMouseClicked
+
+    private void jTextArea1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextArea1MouseEntered
+        // TODO add your handling code here:
+        jTextArea1.setCursor(NORMAL);
+    }//GEN-LAST:event_jTextArea1MouseEntered
 
     
     
@@ -265,7 +420,7 @@ public class App extends javax.swing.JFrame {
     
     public void buttonHoverBehaviour(JPanel button,JLabel text,Color backgroundColor,Color textColor){
         button.setBackground(backgroundColor);
-        button.setCursor(hand);
+        button.setCursor(HAND);
         text.setForeground(textColor);
         
     
@@ -290,6 +445,10 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JPanel imagePane;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JPanel logout;
+    private javax.swing.JLabel logoutTxt;
     private javax.swing.JPanel mainContent;
     private javax.swing.JPanel manage;
     private javax.swing.JLabel manageTxt;
