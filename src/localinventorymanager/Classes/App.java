@@ -124,14 +124,9 @@ public class App extends javax.swing.JFrame {
         mainContent = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         products = new javax.swing.JList<>();
-        imagePane = new javax.swing.JPanel();
-        productImage = new javax.swing.JLabel();
         searchBar = new javax.swing.JTextField();
         searchButton = new javax.swing.JPanel();
         searchButtonTxt = new javax.swing.JLabel();
-        employeeInfo = new javax.swing.JLabel();
-        employeePicPane = new javax.swing.JPanel();
-        employeeImage = new javax.swing.JLabel();
         buttonsPane = new javax.swing.JPanel();
         quickStock = new javax.swing.JPanel();
         quickStockTxt = new javax.swing.JLabel();
@@ -139,8 +134,6 @@ public class App extends javax.swing.JFrame {
         quickSellTxt = new javax.swing.JLabel();
         manage = new javax.swing.JPanel();
         manageTxt = new javax.swing.JLabel();
-        logout = new javax.swing.JPanel();
-        logoutTxt = new javax.swing.JLabel();
         itemInfoPane = new javax.swing.JScrollPane();
         itemInfoTxt = new javax.swing.JTextArea();
 
@@ -748,14 +741,6 @@ public class App extends javax.swing.JFrame {
 
         mainContent.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 124, 498, 209));
 
-        imagePane.setBackground(new java.awt.Color(255, 255, 255));
-        imagePane.setLayout(new java.awt.GridLayout(1, 0));
-
-        productImage.setText("Product");
-        imagePane.add(productImage);
-
-        mainContent.add(imagePane, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 280, 140, 130));
-
         searchBar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 searchBarMouseClicked(evt);
@@ -786,33 +771,6 @@ public class App extends javax.swing.JFrame {
         searchButton.add(searchButtonTxt);
 
         mainContent.add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(371, 351, 133, 22));
-
-        employeeInfo.setText("Bienvenido usuario");
-        mainContent.add(employeeInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(531, 20, -1, -1));
-
-        employeePicPane.setBackground(new java.awt.Color(255, 255, 255));
-
-        employeeImage.setBackground(new java.awt.Color(255, 255, 255));
-        employeeImage.setText("Employee pic");
-
-        javax.swing.GroupLayout employeePicPaneLayout = new javax.swing.GroupLayout(employeePicPane);
-        employeePicPane.setLayout(employeePicPaneLayout);
-        employeePicPaneLayout.setHorizontalGroup(
-            employeePicPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(employeePicPaneLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(employeeImage)
-                .addContainerGap(44, Short.MAX_VALUE))
-        );
-        employeePicPaneLayout.setVerticalGroup(
-            employeePicPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, employeePicPaneLayout.createSequentialGroup()
-                .addContainerGap(45, Short.MAX_VALUE)
-                .addComponent(employeeImage)
-                .addGap(39, 39, 39))
-        );
-
-        mainContent.add(employeePicPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(754, 6, -1, -1));
 
         buttonsPane.setBackground(new java.awt.Color(0, 102, 153));
         buttonsPane.setForeground(new java.awt.Color(102, 255, 102));
@@ -877,34 +835,12 @@ public class App extends javax.swing.JFrame {
         manageTxt.setText("Manage");
         manage.add(manageTxt);
 
-        logout.setBackground(new java.awt.Color(255, 255, 255));
-        logout.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                logoutMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                logoutMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                logoutMouseExited(evt);
-            }
-        });
-        logout.setLayout(new java.awt.GridLayout(1, 0));
-
-        logoutTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        logoutTxt.setForeground(new java.awt.Color(0, 102, 204));
-        logoutTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        logoutTxt.setText("Logout");
-        logout.add(logoutTxt);
-
         javax.swing.GroupLayout buttonsPaneLayout = new javax.swing.GroupLayout(buttonsPane);
         buttonsPane.setLayout(buttonsPaneLayout);
         buttonsPaneLayout.setHorizontalGroup(
             buttonsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonsPaneLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 395, Short.MAX_VALUE)
+                .addContainerGap(511, Short.MAX_VALUE)
                 .addComponent(quickStock, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(quickSell, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -918,8 +854,7 @@ public class App extends javax.swing.JFrame {
                 .addGroup(buttonsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(quickSell, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
                     .addComponent(quickStock, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(manage, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(logout, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(manage, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -942,7 +877,7 @@ public class App extends javax.swing.JFrame {
         });
         itemInfoPane.setViewportView(itemInfoTxt);
 
-        mainContent.add(itemInfoPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 120, 380, 150));
+        mainContent.add(itemInfoPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 160, 380, 170));
 
         root.add(mainContent, java.awt.BorderLayout.CENTER);
 
@@ -1006,18 +941,6 @@ public class App extends javax.swing.JFrame {
         buttonExitBehaviour(manage, manageTxt, WHITE, ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_manageMouseExited
 
-    private void logoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseEntered
-        // TODO add your handling code here:
-        buttonHoverBehaviour(logout, logoutTxt, RED, WHITE);
-
-    }//GEN-LAST:event_logoutMouseEntered
-
-    private void logoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseExited
-        // TODO add your handling code here:
-        buttonExitBehaviour(logout, logoutTxt, WHITE, ORIGINAL_TEXT_COLOR);
-
-    }//GEN-LAST:event_logoutMouseExited
-
     private void productsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productsMouseClicked
         // TODO add your handling code here:
 
@@ -1032,11 +955,6 @@ public class App extends javax.swing.JFrame {
         // TODO add your handling code here:
         openWindow(manageWindow, "Manage", 450, 450);
     }//GEN-LAST:event_manageMouseClicked
-
-    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
-        // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_logoutMouseClicked
 
     private void quickSellMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickSellMouseClicked
         // TODO add your handling code here:
@@ -1329,7 +1247,7 @@ public class App extends javax.swing.JFrame {
     }
 
     /**
-     * Checks if a string is a valid int. Displays an error if it is not.
+     * Checks if a string is a valid int.
      *
      * @param number The string to evaluate.
      * @return true if the string is a valid float;false otherwise.
@@ -1378,19 +1296,38 @@ public class App extends javax.swing.JFrame {
             showError("The price must be a decimal number");
             return false;
         }
-
+        showInfo("The item has been added");
         return true;
     }
+
     /**
      * Shows an error message.
+     *
      * @param message the message to display.
      */
-    private void showError(String message) {
-        JOptionPane.showMessageDialog(null, message);
+    private void showMessage(String message, String title, int messageType) {
+        JOptionPane.showMessageDialog(null, message, title, messageType);
 
     }
+
+    private void showError(String message) {
+        showMessage(message, "Error", JOptionPane.ERROR_MESSAGE);
+
+    }
+
+    private void showWarning(String message) {
+        showMessage(message, "Warning", JOptionPane.WARNING_MESSAGE);
+
+    }
+
+    private void showInfo(String message) {
+        showMessage(message, "Info", JOptionPane.INFORMATION_MESSAGE);
+
+    }
+
     /**
      * Adds an Item object to the inventory.
+     *
      * @param nameField the name of the item.
      * @param stockField the ammount of the item.
      * @param priceField the price of the item.
@@ -1438,10 +1375,6 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JPanel editItem;
     private javax.swing.JLabel editItemTxt;
     private javax.swing.JPanel editProduct;
-    private javax.swing.JLabel employeeImage;
-    private javax.swing.JLabel employeeInfo;
-    private javax.swing.JPanel employeePicPane;
-    private javax.swing.JPanel imagePane;
     private javax.swing.JList<String> inventoryList;
     private javax.swing.JScrollPane itemInfoPane;
     private javax.swing.JTextArea itemInfoTxt;
@@ -1449,8 +1382,6 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JPanel logout;
-    private javax.swing.JLabel logoutTxt;
     private javax.swing.JPanel mainContent;
     private javax.swing.JPanel manage;
     private javax.swing.JLabel manageTxt;
@@ -1465,7 +1396,6 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JTextField price1;
     private javax.swing.JLabel priceLabel;
     private javax.swing.JLabel priceLabel1;
-    private javax.swing.JLabel productImage;
     private javax.swing.JList<String> products;
     private javax.swing.JPanel quickSell;
     private javax.swing.JLabel quickSellTxt;
