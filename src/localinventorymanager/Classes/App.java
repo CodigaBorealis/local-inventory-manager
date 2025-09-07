@@ -5,11 +5,13 @@
 package localinventorymanager.Classes;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Cursor;
 import javax.swing.*;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -26,7 +28,9 @@ public class App extends javax.swing.JFrame {
     private final int MAX_WINDOWS = 2;
     private int openWindows = 1;
     private int id = 1;
+    private DefaultListModel<String> listModel = new DefaultListModel<>();
     private Map<Integer, Item> inventory = new HashMap<>();//key=name of the item; value=the object itself
+    private final Set<JFrame> closedWindows = new HashSet<>();
 
     /**
      * Creates new form App
@@ -35,7 +39,7 @@ public class App extends javax.swing.JFrame {
         // TODO: Initialize the list by loading data from a JSON file on each execution.
 
         initComponents();
-
+        products.setModel(listModel);
         //DefaultListModel<String> model = new DefaultListModel<>();
         //   for (Item item : inventory.values()) {
         //      model.addElement(item.getName());
@@ -88,8 +92,6 @@ public class App extends javax.swing.JFrame {
         price = new javax.swing.JTextField();
         stockBound = new javax.swing.JTextField();
         supplier = new javax.swing.JTextField();
-        addImage = new javax.swing.JPanel();
-        addImageTxt = new javax.swing.JLabel();
         nameLabel = new javax.swing.JLabel();
         addProduct = new javax.swing.JPanel();
         addProductTxt = new javax.swing.JLabel();
@@ -109,8 +111,6 @@ public class App extends javax.swing.JFrame {
         price1 = new javax.swing.JTextField();
         stockBound1 = new javax.swing.JTextField();
         supplier1 = new javax.swing.JTextField();
-        editImage = new javax.swing.JPanel();
-        addImageTxt1 = new javax.swing.JLabel();
         nameLabel1 = new javax.swing.JLabel();
         editProduct = new javax.swing.JPanel();
         addProductTxt1 = new javax.swing.JLabel();
@@ -141,11 +141,7 @@ public class App extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 153));
 
-        inventoryList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
+        inventoryList.setBorder(null);
         jScrollPane2.setViewportView(inventoryList);
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -288,6 +284,8 @@ public class App extends javax.swing.JFrame {
 
         manageWindow.getContentPane().add(jPanel1);
 
+        inventoryList.setModel(listModel);
+
         quickSellWindow.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         rootQuickSell.setBackground(new java.awt.Color(0, 102, 153));
@@ -416,26 +414,7 @@ public class App extends javax.swing.JFrame {
         otherRoot.setForeground(new java.awt.Color(0, 102, 153));
 
         addInventoryRoot.setBackground(new java.awt.Color(0, 102, 153));
-
-        addImage.setBackground(new java.awt.Color(255, 255, 255));
-        addImage.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addImageMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                addImageMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                addImageMouseExited(evt);
-            }
-        });
-        addImage.setLayout(new java.awt.GridLayout(1, 0));
-
-        addImageTxt.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        addImageTxt.setForeground(new java.awt.Color(0, 102, 204));
-        addImageTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        addImageTxt.setText("Add image");
-        addImage.add(addImageTxt);
+        name.setText("");         description.setText("");         category.setText("");         stock.setText("");         price.setText("");         stockBound.setText("");         supplier.setText("");
 
         nameLabel.setForeground(new java.awt.Color(255, 255, 255));
         nameLabel.setText("Product Name");
@@ -492,9 +471,7 @@ public class App extends javax.swing.JFrame {
                     .addComponent(name)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addInventoryRootLayout.createSequentialGroup()
                         .addGap(0, 367, Short.MAX_VALUE)
-                        .addGroup(addInventoryRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(addProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
-                            .addComponent(addImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(addProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(category)
                     .addGroup(addInventoryRootLayout.createSequentialGroup()
                         .addGroup(addInventoryRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -539,12 +516,18 @@ public class App extends javax.swing.JFrame {
                 .addComponent(supplierLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(supplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
-                .addComponent(addImage, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(addProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(170, 170, 170))
+                .addContainerGap(220, Short.MAX_VALUE))
         );
+
+        name.setText("");         
+        description.setText("");         
+        category.setText("");         
+        stock.setText("");         
+        price.setText("");         
+        stockBound.setText("");
+        supplier.setText("");
 
         javax.swing.GroupLayout otherRootLayout = new javax.swing.GroupLayout(otherRoot);
         otherRoot.setLayout(otherRootLayout);
@@ -571,26 +554,6 @@ public class App extends javax.swing.JFrame {
         otherRoot1.setForeground(new java.awt.Color(0, 102, 153));
 
         addInventoryRoot1.setBackground(new java.awt.Color(0, 102, 153));
-
-        editImage.setBackground(new java.awt.Color(255, 255, 255));
-        editImage.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editImageMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                editImageMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                editImageMouseExited(evt);
-            }
-        });
-        editImage.setLayout(new java.awt.GridLayout(1, 0));
-
-        addImageTxt1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        addImageTxt1.setForeground(new java.awt.Color(0, 102, 204));
-        addImageTxt1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        addImageTxt1.setText("Edit image");
-        editImage.add(addImageTxt1);
 
         nameLabel1.setForeground(new java.awt.Color(255, 255, 255));
         nameLabel1.setText("Product Name");
@@ -647,9 +610,7 @@ public class App extends javax.swing.JFrame {
                     .addComponent(name1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addInventoryRoot1Layout.createSequentialGroup()
                         .addGap(0, 367, Short.MAX_VALUE)
-                        .addGroup(addInventoryRoot1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(editProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
-                            .addComponent(editImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(editProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(category1)
                     .addGroup(addInventoryRoot1Layout.createSequentialGroup()
                         .addGroup(addInventoryRoot1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -694,11 +655,9 @@ public class App extends javax.swing.JFrame {
                 .addComponent(supplierLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(supplier1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
-                .addComponent(editImage, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(editProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(170, 170, 170))
+                .addContainerGap(220, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout otherRoot1Layout = new javax.swing.GroupLayout(otherRoot1);
@@ -730,8 +689,9 @@ public class App extends javax.swing.JFrame {
         mainContent.setBackground(new java.awt.Color(0, 102, 153));
         mainContent.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        products.setBorder(null);
         products.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        products.setToolTipText("");
+        products.setToolTipText("Products in inventory");
         products.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 productsMouseClicked(evt);
@@ -868,6 +828,7 @@ public class App extends javax.swing.JFrame {
         itemInfoTxt.setLineWrap(true);
         itemInfoTxt.setRows(5);
         itemInfoTxt.setWrapStyleWord(true);
+        itemInfoTxt.setBorder(null);
         itemInfoTxt.setFocusable(false);
         itemInfoTxt.setRequestFocusEnabled(false);
         itemInfoTxt.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1061,7 +1022,9 @@ public class App extends javax.swing.JFrame {
         // TODO add your handling code here:
         if (validItem(name.getText(), stock.getText(), price.getText())) {
             addItem(name.getText(), stock.getText(), price.getText());
-
+            updateProducts();
+            closeAfterOperation(addProduct);
+            addCleanup();
         }
     }//GEN-LAST:event_addProductMouseClicked
 
@@ -1074,37 +1037,6 @@ public class App extends javax.swing.JFrame {
         // TODO add your handling code here:
         buttonExitBehaviour(addProduct, addProductTxt, WHITE, ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_addProductMouseExited
-
-    private void addImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addImageMouseClicked
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_addImageMouseClicked
-
-    private void addImageMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addImageMouseEntered
-        // TODO add your handling code here:
-        buttonHoverBehaviour(addImage, addImageTxt, HOVER_COLOR, WHITE);
-    }//GEN-LAST:event_addImageMouseEntered
-
-    private void addImageMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addImageMouseExited
-        // TODO add your handling code here:
-        buttonExitBehaviour(addImage, addImageTxt, WHITE, ORIGINAL_TEXT_COLOR);
-    }//GEN-LAST:event_addImageMouseExited
-
-    private void editImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editImageMouseClicked
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_editImageMouseClicked
-
-    private void editImageMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editImageMouseEntered
-        // TODO add your handling code here:
-        buttonHoverBehaviour(editImage, addImageTxt1, HOVER_COLOR, WHITE);
-    }//GEN-LAST:event_editImageMouseEntered
-
-    private void editImageMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editImageMouseExited
-        // TODO add your handling code here:
-        buttonExitBehaviour(editImage, addImageTxt1, WHITE, ORIGINAL_TEXT_COLOR);
-
-    }//GEN-LAST:event_editImageMouseExited
 
     private void editProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductMouseClicked
         // TODO add your handling code here:
@@ -1211,6 +1143,10 @@ public class App extends javax.swing.JFrame {
      * @param window The target JFrame.
      */
     private void overrideWindowClose(JFrame window) {
+        if (closedWindows.contains(window)) {
+            return;
+        }
+        closedWindows.add(window);
         window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         window.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -1338,10 +1274,44 @@ public class App extends javax.swing.JFrame {
         inventory.put(id, new Item.Builder(id, nameField, Float.parseFloat(priceField), availability).stock(Integer.parseInt(stockField)).build());
     }
 
+    private void updateProducts() {
+        listModel.clear();
+        for (Item product : inventory.values()) {
+            listModel.addElement(product.getName());
+        }
+
+    }
+
+    private void closeAfterOperation(Component component) {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(component);
+        if (frame != null) {
+            frame.dispose();
+
+        }
+
+    }
+
+    private void addCleanup() {
+        name.setText("");
+        description.setText("");
+        category.setText("");
+        stock.setText("");
+        price.setText("");
+        stockBound.setText("");
+        supplier.setText("");
+    }
+    private void updateCleanup(){
+        name1.setText("");
+        description1.setText("");
+        category1.setText("");
+        stock1.setText("");
+        price1.setText("");
+        stockBound1.setText("");
+        supplier1.setText("");
+    
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel addImage;
-    private javax.swing.JLabel addImageTxt;
-    private javax.swing.JLabel addImageTxt1;
     private javax.swing.JFrame addInventory;
     private javax.swing.JPanel addInventoryRoot;
     private javax.swing.JPanel addInventoryRoot1;
@@ -1370,7 +1340,6 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JTextField description1;
     private javax.swing.JLabel descriptionLabel;
     private javax.swing.JLabel descriptionLabel1;
-    private javax.swing.JPanel editImage;
     private javax.swing.JFrame editInventory;
     private javax.swing.JPanel editItem;
     private javax.swing.JLabel editItemTxt;
