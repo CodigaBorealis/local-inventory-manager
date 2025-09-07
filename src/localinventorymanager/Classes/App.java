@@ -1256,30 +1256,44 @@ public class App extends javax.swing.JFrame {
             }
         });
     }
-    
+            /**
+ * Applies hover animation to a button (JPanel).
+ *
+ * @param button The button panel.
+ * @param text The label inside the button.
+ * @param backgroundColor The background color when hovered.
+ * @param textColor The text color when hovered.
+ */
     private void buttonHoverBehaviour(JPanel button,JLabel text,Color backgroundColor,Color textColor){
         button.setBackground(backgroundColor);
         button.setCursor(HAND);
         text.setForeground(textColor);
-        
-    
-    
-    
-    
     }
+            /**
+ * Applies hover animation to a button (JPanel) when the cursor exits.
+ *
+ * @param button The button panel.
+ * @param text The label inside the button.
+ * @param backgroundColor The background color when the cursor exits.
+ * @param textColor The text color when the cursor exits.
+ */
     private void buttonExitBehaviour(JPanel button,JLabel text, Color backgroundColor,Color textColor){
+
         button.setBackground(backgroundColor);
         text.setForeground(textColor);
-        
-    
-    
-    
-    
     }
+            /**
+ * Opens a new JFrame from any button.
+ *
+ * @param window The target JFrame.
+ * @param title The JFrame title.
+ * @param height The JFrame height.
+ * @param width The JFrame width.
+ */
     private void openWindow(JFrame window, String title,int height, int width){
     //    if(openWindows<MAX_WINDOWS){
         
-        window.setSize(height, width);
+        window.setSize(width, height);
         window.setLocationRelativeTo(null);
         window.setResizable(false);
         window.setTitle(title);
@@ -1290,6 +1304,11 @@ public class App extends javax.swing.JFrame {
        // }
     
     }
+ /**
+ * Overrides default window close behaviour for a JFrame initialized with openWindow.
+ *Asks the user to confirm before closing the JFrame.
+ * @param window The target JFrame.
+ */
     private void overrideWindowClose(JFrame window){
             window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         window.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -1304,18 +1323,24 @@ public class App extends javax.swing.JFrame {
         }}
         
         });}
+ /**
+ * Checks if a string is a valid float.
+ * Displays an error if it is not.
+ * @param number The string to evaluate.
+ * @return true if the string is a valid float;false otherwise.
+ */
     private boolean isFloat(String number){
-        if(number.isEmpty()){
+        if(number.trim().isEmpty()){
             JOptionPane.showMessageDialog(null,"The price cannot be empty");
             return false;
         }
         try{
-            Float.valueOf(number);
+            Float.valueOf(number.trim());
             return true;
         
         
         
-        }catch(Exception e){
+        }catch(NumberFormatException  e){
         JOptionPane.showMessageDialog(null,"The price is not a valid number");
         return false;
         
@@ -1323,6 +1348,12 @@ public class App extends javax.swing.JFrame {
         
         }
     }
+ /**
+ * Handles validation errors for missing fields when creating an Item object trough the UI.
+ * Displays an error based on which fields are missing.\
+ * @param name The String name to initialize the object with.
+ * @param price The float price to initialize the object with;expected to be validated by isFloat beforehand.
+ */
     private void handleAdditionError(String name, String price){
         if(name.isEmpty() && !price.isEmpty()){
         JOptionPane.showMessageDialog(null,"The name cannot be empty");
