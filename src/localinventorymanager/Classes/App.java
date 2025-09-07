@@ -63,6 +63,50 @@ public class App extends javax.swing.JFrame {
         confirmStock = new javax.swing.JPanel();
         confirmStockTxt = new javax.swing.JLabel();
         ammountStockedLabel = new javax.swing.JLabel();
+        addInventory = new javax.swing.JFrame();
+        otherRoot = new javax.swing.JPanel();
+        addInventoryRoot = new javax.swing.JPanel();
+        name = new javax.swing.JTextField();
+        description = new javax.swing.JTextField();
+        category = new javax.swing.JTextField();
+        stock = new javax.swing.JTextField();
+        price = new javax.swing.JTextField();
+        stockBound = new javax.swing.JTextField();
+        supplier = new javax.swing.JTextField();
+        addImage = new javax.swing.JPanel();
+        addImageTxt = new javax.swing.JLabel();
+        nameLabel = new javax.swing.JLabel();
+        available = new javax.swing.JCheckBox();
+        addProduct = new javax.swing.JPanel();
+        addProductTxt = new javax.swing.JLabel();
+        descriptionLabel = new javax.swing.JLabel();
+        categoryLabel = new javax.swing.JLabel();
+        stockLabel = new javax.swing.JLabel();
+        priceLabel = new javax.swing.JLabel();
+        stockBoundLabel = new javax.swing.JLabel();
+        supplierLabel = new javax.swing.JLabel();
+        editInventory = new javax.swing.JFrame();
+        otherRoot1 = new javax.swing.JPanel();
+        addInventoryRoot1 = new javax.swing.JPanel();
+        name1 = new javax.swing.JTextField();
+        description1 = new javax.swing.JTextField();
+        category1 = new javax.swing.JTextField();
+        stock1 = new javax.swing.JTextField();
+        price1 = new javax.swing.JTextField();
+        stockBound1 = new javax.swing.JTextField();
+        supplier1 = new javax.swing.JTextField();
+        editImage = new javax.swing.JPanel();
+        addImageTxt1 = new javax.swing.JLabel();
+        nameLabel1 = new javax.swing.JLabel();
+        available1 = new javax.swing.JCheckBox();
+        editProduct = new javax.swing.JPanel();
+        addProductTxt1 = new javax.swing.JLabel();
+        descriptionLabel1 = new javax.swing.JLabel();
+        categoryLabel1 = new javax.swing.JLabel();
+        stockLabel1 = new javax.swing.JLabel();
+        priceLabel1 = new javax.swing.JLabel();
+        stockBoundLabel1 = new javax.swing.JLabel();
+        supplierLabel1 = new javax.swing.JLabel();
         root = new javax.swing.JPanel();
         mainContent = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -123,6 +167,7 @@ public class App extends javax.swing.JFrame {
 
         deleteItemTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         deleteItemTxt.setForeground(new java.awt.Color(0, 102, 204));
+        deleteItemTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         deleteItemTxt.setText("Delete item");
         deleteItem.add(deleteItemTxt);
 
@@ -142,6 +187,7 @@ public class App extends javax.swing.JFrame {
 
         editItemTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         editItemTxt.setForeground(new java.awt.Color(0, 102, 204));
+        editItemTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         editItemTxt.setText("Edit item");
         editItem.add(editItemTxt);
 
@@ -161,6 +207,7 @@ public class App extends javax.swing.JFrame {
 
         addItemTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         addItemTxt.setForeground(new java.awt.Color(0, 102, 204));
+        addItemTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         addItemTxt.setText("Add item");
         addItem.add(addItemTxt);
 
@@ -200,6 +247,7 @@ public class App extends javax.swing.JFrame {
         search.setLayout(new java.awt.GridLayout());
 
         searchTxt.setForeground(new java.awt.Color(0, 102, 204));
+        searchTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         searchTxt.setText("Search");
         search.add(searchTxt);
 
@@ -356,6 +404,338 @@ public class App extends javax.swing.JFrame {
 
         quickStockWindow.getContentPane().add(rootQuickStock);
 
+        addInventory.getContentPane().setLayout(new java.awt.GridLayout());
+
+        otherRoot.setBackground(new java.awt.Color(0, 102, 153));
+        otherRoot.setForeground(new java.awt.Color(0, 102, 153));
+
+        addInventoryRoot.setBackground(new java.awt.Color(0, 102, 153));
+
+        addImage.setBackground(new java.awt.Color(255, 255, 255));
+        addImage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addImageMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                addImageMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                addImageMouseExited(evt);
+            }
+        });
+        addImage.setLayout(new java.awt.GridLayout());
+
+        addImageTxt.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        addImageTxt.setForeground(new java.awt.Color(0, 102, 204));
+        addImageTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        addImageTxt.setText("Add image");
+        addImage.add(addImageTxt);
+
+        nameLabel.setForeground(new java.awt.Color(255, 255, 255));
+        nameLabel.setText("Product Name");
+
+        available.setBackground(new java.awt.Color(0, 102, 153));
+        available.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        available.setForeground(new java.awt.Color(255, 255, 255));
+        available.setText("Available");
+        available.setBorder(null);
+        available.setFocusable(false);
+
+        addProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addProductMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                addProductMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                addProductMouseExited(evt);
+            }
+        });
+        addProduct.setLayout(new java.awt.GridLayout());
+
+        addProductTxt.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        addProductTxt.setForeground(new java.awt.Color(0, 102, 204));
+        addProductTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        addProductTxt.setText("Add product");
+        addProduct.add(addProductTxt);
+
+        descriptionLabel.setForeground(new java.awt.Color(255, 255, 255));
+        descriptionLabel.setText("Description");
+
+        categoryLabel.setForeground(new java.awt.Color(255, 255, 255));
+        categoryLabel.setText("Category");
+
+        stockLabel.setForeground(new java.awt.Color(255, 255, 255));
+        stockLabel.setText("Stock");
+
+        priceLabel.setForeground(new java.awt.Color(255, 255, 255));
+        priceLabel.setText("Price");
+
+        stockBoundLabel.setForeground(new java.awt.Color(255, 255, 255));
+        stockBoundLabel.setText("StockBound");
+
+        supplierLabel.setForeground(new java.awt.Color(255, 255, 255));
+        supplierLabel.setText("Supplier");
+
+        javax.swing.GroupLayout addInventoryRootLayout = new javax.swing.GroupLayout(addInventoryRoot);
+        addInventoryRoot.setLayout(addInventoryRootLayout);
+        addInventoryRootLayout.setHorizontalGroup(
+            addInventoryRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addInventoryRootLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(addInventoryRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(price, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(supplier)
+                    .addComponent(stockBound)
+                    .addComponent(stock)
+                    .addComponent(description)
+                    .addComponent(name)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addInventoryRootLayout.createSequentialGroup()
+                        .addGap(0, 269, Short.MAX_VALUE)
+                        .addComponent(available)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(addInventoryRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(addProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                            .addComponent(addImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(category)
+                    .addGroup(addInventoryRootLayout.createSequentialGroup()
+                        .addGroup(addInventoryRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(categoryLabel)
+                            .addComponent(nameLabel)
+                            .addComponent(descriptionLabel)
+                            .addComponent(stockLabel)
+                            .addComponent(priceLabel)
+                            .addComponent(stockBoundLabel)
+                            .addComponent(supplierLabel))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        addInventoryRootLayout.setVerticalGroup(
+            addInventoryRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addInventoryRootLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(nameLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(descriptionLabel)
+                .addGap(2, 2, 2)
+                .addComponent(description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(categoryLabel)
+                .addGap(2, 2, 2)
+                .addComponent(category, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
+                .addComponent(stockLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(stock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(priceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(stockBoundLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(stockBound, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(supplierLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3)
+                .addComponent(supplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21)
+                .addGroup(addInventoryRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(available)
+                    .addComponent(addImage, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(addProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(170, 170, 170))
+        );
+
+        javax.swing.GroupLayout otherRootLayout = new javax.swing.GroupLayout(otherRoot);
+        otherRoot.setLayout(otherRootLayout);
+        otherRootLayout.setHorizontalGroup(
+            otherRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(otherRootLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(addInventoryRoot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        otherRootLayout.setVerticalGroup(
+            otherRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(otherRootLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(addInventoryRoot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        addInventory.getContentPane().add(otherRoot);
+
+        editInventory.getContentPane().setLayout(new java.awt.GridLayout());
+
+        otherRoot1.setBackground(new java.awt.Color(0, 102, 153));
+        otherRoot1.setForeground(new java.awt.Color(0, 102, 153));
+
+        addInventoryRoot1.setBackground(new java.awt.Color(0, 102, 153));
+
+        editImage.setBackground(new java.awt.Color(255, 255, 255));
+        editImage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editImageMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editImageMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editImageMouseExited(evt);
+            }
+        });
+        editImage.setLayout(new java.awt.GridLayout());
+
+        addImageTxt1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        addImageTxt1.setForeground(new java.awt.Color(0, 102, 204));
+        addImageTxt1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        addImageTxt1.setText("Edit image");
+        editImage.add(addImageTxt1);
+
+        nameLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        nameLabel1.setText("Product Name");
+
+        available1.setBackground(new java.awt.Color(0, 102, 153));
+        available1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        available1.setForeground(new java.awt.Color(255, 255, 255));
+        available1.setText("Available");
+        available1.setBorder(null);
+        available1.setFocusable(false);
+
+        editProduct.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editProductMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editProductMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editProductMouseExited(evt);
+            }
+        });
+        editProduct.setLayout(new java.awt.GridLayout());
+
+        addProductTxt1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        addProductTxt1.setForeground(new java.awt.Color(0, 102, 204));
+        addProductTxt1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        addProductTxt1.setText("Edit product");
+        editProduct.add(addProductTxt1);
+
+        descriptionLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        descriptionLabel1.setText("Description");
+
+        categoryLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        categoryLabel1.setText("Category");
+
+        stockLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        stockLabel1.setText("Stock");
+
+        priceLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        priceLabel1.setText("Price");
+
+        stockBoundLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        stockBoundLabel1.setText("StockBound");
+
+        supplierLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        supplierLabel1.setText("Supplier");
+
+        javax.swing.GroupLayout addInventoryRoot1Layout = new javax.swing.GroupLayout(addInventoryRoot1);
+        addInventoryRoot1.setLayout(addInventoryRoot1Layout);
+        addInventoryRoot1Layout.setHorizontalGroup(
+            addInventoryRoot1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addInventoryRoot1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(addInventoryRoot1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(price1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(supplier1)
+                    .addComponent(stockBound1)
+                    .addComponent(stock1)
+                    .addComponent(description1)
+                    .addComponent(name1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addInventoryRoot1Layout.createSequentialGroup()
+                        .addGap(0, 269, Short.MAX_VALUE)
+                        .addComponent(available1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(addInventoryRoot1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(editProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                            .addComponent(editImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(category1)
+                    .addGroup(addInventoryRoot1Layout.createSequentialGroup()
+                        .addGroup(addInventoryRoot1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(categoryLabel1)
+                            .addComponent(nameLabel1)
+                            .addComponent(descriptionLabel1)
+                            .addComponent(stockLabel1)
+                            .addComponent(priceLabel1)
+                            .addComponent(stockBoundLabel1)
+                            .addComponent(supplierLabel1))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        addInventoryRoot1Layout.setVerticalGroup(
+            addInventoryRoot1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addInventoryRoot1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(nameLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(name1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(descriptionLabel1)
+                .addGap(2, 2, 2)
+                .addComponent(description1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(categoryLabel1)
+                .addGap(2, 2, 2)
+                .addComponent(category1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
+                .addComponent(stockLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(stock1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(priceLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(price1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(stockBoundLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(stockBound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(supplierLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3)
+                .addComponent(supplier1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21)
+                .addGroup(addInventoryRoot1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(available1)
+                    .addComponent(editImage, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(editProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(170, 170, 170))
+        );
+
+        javax.swing.GroupLayout otherRoot1Layout = new javax.swing.GroupLayout(otherRoot1);
+        otherRoot1.setLayout(otherRoot1Layout);
+        otherRoot1Layout.setHorizontalGroup(
+            otherRoot1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(otherRoot1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(addInventoryRoot1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        otherRoot1Layout.setVerticalGroup(
+            otherRoot1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(otherRoot1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(addInventoryRoot1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        editInventory.getContentPane().add(otherRoot1);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         getContentPane().setLayout(new java.awt.GridLayout());
@@ -415,6 +795,7 @@ public class App extends javax.swing.JFrame {
         searchButton.setLayout(new java.awt.GridLayout());
 
         searchButtonTxt.setForeground(new java.awt.Color(0, 102, 204));
+        searchButtonTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         searchButtonTxt.setText("Search product");
         searchButton.add(searchButtonTxt);
 
@@ -466,6 +847,7 @@ public class App extends javax.swing.JFrame {
 
         quickStockTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         quickStockTxt.setForeground(new java.awt.Color(0, 102, 204));
+        quickStockTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         quickStockTxt.setText("Quick stock");
         quickStock.add(quickStockTxt);
 
@@ -485,6 +867,7 @@ public class App extends javax.swing.JFrame {
 
         quickSellTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         quickSellTxt.setForeground(new java.awt.Color(0, 102, 204));
+        quickSellTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         quickSellTxt.setText("Quick retrieve");
         quickSell.add(quickSellTxt);
 
@@ -504,6 +887,7 @@ public class App extends javax.swing.JFrame {
 
         manageTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         manageTxt.setForeground(new java.awt.Color(0, 102, 204));
+        manageTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         manageTxt.setText("Manage");
         manage.add(manageTxt);
 
@@ -523,6 +907,7 @@ public class App extends javax.swing.JFrame {
 
         logoutTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         logoutTxt.setForeground(new java.awt.Color(0, 102, 204));
+        logoutTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         logoutTxt.setText("Logout");
         logout.add(logoutTxt);
 
@@ -694,7 +1079,7 @@ public class App extends javax.swing.JFrame {
 
     private void editItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editItemMouseClicked
         // TODO add your handling code here:
-        
+        openWindow(editInventory,"Edit item",500,500);
     }//GEN-LAST:event_editItemMouseClicked
 
     private void editItemMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editItemMouseEntered
@@ -709,6 +1094,7 @@ public class App extends javax.swing.JFrame {
 
     private void addItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addItemMouseClicked
         // TODO add your handling code here:
+        openWindow(addInventory,"Add item",500,500);
         
     }//GEN-LAST:event_addItemMouseClicked
 
@@ -768,6 +1154,63 @@ public class App extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+    private void addProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addProductMouseClicked
+
+    private void addProductMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductMouseEntered
+        // TODO add your handling code here:
+            buttonHoverBehaviour(addProduct,addProductTxt,HOVER_COLOR,WHITE);
+    }//GEN-LAST:event_addProductMouseEntered
+
+    private void addProductMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductMouseExited
+        // TODO add your handling code here:
+        buttonExitBehaviour(addProduct,addProductTxt,WHITE,ORIGINAL_TEXT_COLOR);
+    }//GEN-LAST:event_addProductMouseExited
+
+    private void addImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addImageMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_addImageMouseClicked
+
+    private void addImageMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addImageMouseEntered
+        // TODO add your handling code here:
+        buttonHoverBehaviour(addImage,addImageTxt,HOVER_COLOR,WHITE);
+    }//GEN-LAST:event_addImageMouseEntered
+
+    private void addImageMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addImageMouseExited
+        // TODO add your handling code here:
+        buttonExitBehaviour(addImage,addImageTxt,WHITE,ORIGINAL_TEXT_COLOR);
+    }//GEN-LAST:event_addImageMouseExited
+
+    private void editImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editImageMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_editImageMouseClicked
+
+    private void editImageMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editImageMouseEntered
+        // TODO add your handling code here:
+        buttonHoverBehaviour(editImage,addImageTxt1,HOVER_COLOR,WHITE);
+    }//GEN-LAST:event_editImageMouseEntered
+
+    private void editImageMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editImageMouseExited
+        // TODO add your handling code here:
+         buttonExitBehaviour(editImage,addImageTxt1,WHITE,ORIGINAL_TEXT_COLOR);
+        
+    }//GEN-LAST:event_editImageMouseExited
+
+    private void editProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editProductMouseClicked
+
+    private void editProductMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editProductMouseEntered
+
+    private void editProductMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_editProductMouseExited
+
     
     
 
@@ -826,7 +1269,7 @@ public class App extends javax.swing.JFrame {
     
     }
     public void openWindow(JFrame window, String title,int height, int width){
-        if(openWindows<MAX_WINDOWS){
+    //    if(openWindows<MAX_WINDOWS){
         
         window.setSize(height, width);
         window.setLocationRelativeTo(null);
@@ -834,9 +1277,9 @@ public class App extends javax.swing.JFrame {
         window.setTitle(title);
         overrideWindowClose(window);
         openWindows++;
-        window.setVisible(true);}else{
-        JOptionPane.showMessageDialog(null,"You have an operation in process");
-        }
+        window.setVisible(true);//}else{
+      //  JOptionPane.showMessageDialog(null,"You have an operation in process");
+       // }
     
     }
     public void overrideWindowClose(JFrame window){
@@ -854,22 +1297,44 @@ public class App extends javax.swing.JFrame {
         
         });}
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel addImage;
+    private javax.swing.JLabel addImageTxt;
+    private javax.swing.JLabel addImageTxt1;
+    private javax.swing.JFrame addInventory;
+    private javax.swing.JPanel addInventoryRoot;
+    private javax.swing.JPanel addInventoryRoot1;
     private javax.swing.JPanel addItem;
     private javax.swing.JLabel addItemTxt;
+    private javax.swing.JPanel addProduct;
+    private javax.swing.JLabel addProductTxt;
+    private javax.swing.JLabel addProductTxt1;
     private javax.swing.JLabel ammountSelledLabel;
     private javax.swing.JLabel ammountStockedLabel;
     private javax.swing.JTextField ammountToSell;
     private javax.swing.JTextField ammountToStock;
+    private javax.swing.JCheckBox available;
+    private javax.swing.JCheckBox available1;
     private javax.swing.JPanel buttonsPane;
     private javax.swing.JPanel buttonsPane1;
+    private javax.swing.JTextField category;
+    private javax.swing.JTextField category1;
+    private javax.swing.JLabel categoryLabel;
+    private javax.swing.JLabel categoryLabel1;
     private javax.swing.JPanel confirmSell;
     private javax.swing.JLabel confirmSellTxt;
     private javax.swing.JPanel confirmStock;
     private javax.swing.JLabel confirmStockTxt;
     private javax.swing.JPanel deleteItem;
     private javax.swing.JLabel deleteItemTxt;
+    private javax.swing.JTextField description;
+    private javax.swing.JTextField description1;
+    private javax.swing.JLabel descriptionLabel;
+    private javax.swing.JLabel descriptionLabel1;
+    private javax.swing.JPanel editImage;
+    private javax.swing.JFrame editInventory;
     private javax.swing.JPanel editItem;
     private javax.swing.JLabel editItemTxt;
+    private javax.swing.JPanel editProduct;
     private javax.swing.JLabel employeeImage;
     private javax.swing.JLabel employeeInfo;
     private javax.swing.JPanel employeePicPane;
@@ -887,6 +1352,16 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JPanel manage;
     private javax.swing.JLabel manageTxt;
     private javax.swing.JFrame manageWindow;
+    private javax.swing.JTextField name;
+    private javax.swing.JTextField name1;
+    private javax.swing.JLabel nameLabel;
+    private javax.swing.JLabel nameLabel1;
+    private javax.swing.JPanel otherRoot;
+    private javax.swing.JPanel otherRoot1;
+    private javax.swing.JTextField price;
+    private javax.swing.JTextField price1;
+    private javax.swing.JLabel priceLabel;
+    private javax.swing.JLabel priceLabel1;
     private javax.swing.JLabel productImage;
     private javax.swing.JList<String> products;
     private javax.swing.JPanel quickSell;
@@ -903,5 +1378,17 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JPanel searchButton;
     private javax.swing.JLabel searchButtonTxt;
     private javax.swing.JLabel searchTxt;
+    private javax.swing.JTextField stock;
+    private javax.swing.JTextField stock1;
+    private javax.swing.JTextField stockBound;
+    private javax.swing.JTextField stockBound1;
+    private javax.swing.JLabel stockBoundLabel;
+    private javax.swing.JLabel stockBoundLabel1;
+    private javax.swing.JLabel stockLabel;
+    private javax.swing.JLabel stockLabel1;
+    private javax.swing.JTextField supplier;
+    private javax.swing.JTextField supplier1;
+    private javax.swing.JLabel supplierLabel;
+    private javax.swing.JLabel supplierLabel1;
     // End of variables declaration//GEN-END:variables
 }
