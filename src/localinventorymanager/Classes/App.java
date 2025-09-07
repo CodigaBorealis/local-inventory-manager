@@ -10,33 +10,37 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 /**
  *
  * @author XD
  */
 public class App extends javax.swing.JFrame {
-    private final Color WHITE=new Color(255,255,255);
-    private final Color RED=new Color(255,0,0);
-    private final Color HOVER_COLOR=new Color(99, 190, 255);
-    private final Color ORIGINAL_TEXT_COLOR=new Color(0,102,204);
-    private final Cursor HAND=new Cursor(Cursor.HAND_CURSOR);
-    private final Cursor NORMAL=new Cursor(Cursor.DEFAULT_CURSOR);
-    private final int MAX_WINDOWS=2;
-    private int openWindows=1;
-    private int nextId=1;
-    private Map <Integer, Item>inventory=new HashMap<>();//key=name of the item; value=the object itself
+
+    private final Color WHITE = new Color(255, 255, 255);
+    private final Color RED = new Color(255, 0, 0);
+    private final Color HOVER_COLOR = new Color(99, 190, 255);
+    private final Color ORIGINAL_TEXT_COLOR = new Color(0, 102, 204);
+    private final Cursor HAND = new Cursor(Cursor.HAND_CURSOR);
+    private final Cursor NORMAL = new Cursor(Cursor.DEFAULT_CURSOR);
+    private final int MAX_WINDOWS = 2;
+    private int openWindows = 1;
+    private int id = 1;
+    private Map<Integer, Item> inventory = new HashMap<>();//key=name of the item; value=the object itself
+
     /**
      * Creates new form App
      */
     public App() {
-        
-        for(int x=0;x<12;x++){
-            int id=nextId++;
-        inventory.put(id, new Item.Builder(id, "cookies "+x,12.3f, true).build());
-      
-        }
-        
+        // TODO: Initialize the list by loading data from a JSON file on each execution.
+
         initComponents();
+
+        //DefaultListModel<String> model = new DefaultListModel<>();
+        //   for (Item item : inventory.values()) {
+        //      model.addElement(item.getName());
+        //    }
+        //  products.setModel(model);
     }
 
     /**
@@ -51,7 +55,7 @@ public class App extends javax.swing.JFrame {
         manageWindow = new javax.swing.JFrame();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        inventoryList = new javax.swing.JList<>();
         jTextField1 = new javax.swing.JTextField();
         buttonsPane1 = new javax.swing.JPanel();
         deleteItem = new javax.swing.JPanel();
@@ -87,7 +91,6 @@ public class App extends javax.swing.JFrame {
         addImage = new javax.swing.JPanel();
         addImageTxt = new javax.swing.JLabel();
         nameLabel = new javax.swing.JLabel();
-        available = new javax.swing.JCheckBox();
         addProduct = new javax.swing.JPanel();
         addProductTxt = new javax.swing.JLabel();
         descriptionLabel = new javax.swing.JLabel();
@@ -109,7 +112,6 @@ public class App extends javax.swing.JFrame {
         editImage = new javax.swing.JPanel();
         addImageTxt1 = new javax.swing.JLabel();
         nameLabel1 = new javax.swing.JLabel();
-        available1 = new javax.swing.JCheckBox();
         editProduct = new javax.swing.JPanel();
         addProductTxt1 = new javax.swing.JLabel();
         descriptionLabel1 = new javax.swing.JLabel();
@@ -142,16 +144,16 @@ public class App extends javax.swing.JFrame {
         itemInfoPane = new javax.swing.JScrollPane();
         itemInfoTxt = new javax.swing.JTextArea();
 
-        manageWindow.getContentPane().setLayout(new java.awt.GridLayout());
+        manageWindow.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         jPanel1.setBackground(new java.awt.Color(0, 102, 153));
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        inventoryList.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(jList1);
+        jScrollPane2.setViewportView(inventoryList);
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -174,7 +176,7 @@ public class App extends javax.swing.JFrame {
                 deleteItemMouseExited(evt);
             }
         });
-        deleteItem.setLayout(new java.awt.GridLayout());
+        deleteItem.setLayout(new java.awt.GridLayout(1, 0));
 
         deleteItemTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         deleteItemTxt.setForeground(new java.awt.Color(0, 102, 204));
@@ -194,7 +196,7 @@ public class App extends javax.swing.JFrame {
                 editItemMouseExited(evt);
             }
         });
-        editItem.setLayout(new java.awt.GridLayout());
+        editItem.setLayout(new java.awt.GridLayout(1, 0));
 
         editItemTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         editItemTxt.setForeground(new java.awt.Color(0, 102, 204));
@@ -214,7 +216,7 @@ public class App extends javax.swing.JFrame {
                 addItemMouseExited(evt);
             }
         });
-        addItem.setLayout(new java.awt.GridLayout());
+        addItem.setLayout(new java.awt.GridLayout(1, 0));
 
         addItemTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         addItemTxt.setForeground(new java.awt.Color(0, 102, 204));
@@ -255,7 +257,7 @@ public class App extends javax.swing.JFrame {
                 searchMouseExited(evt);
             }
         });
-        search.setLayout(new java.awt.GridLayout());
+        search.setLayout(new java.awt.GridLayout(1, 0));
 
         searchTxt.setForeground(new java.awt.Color(0, 102, 204));
         searchTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -293,7 +295,7 @@ public class App extends javax.swing.JFrame {
 
         manageWindow.getContentPane().add(jPanel1);
 
-        quickSellWindow.getContentPane().setLayout(new java.awt.GridLayout());
+        quickSellWindow.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         rootQuickSell.setBackground(new java.awt.Color(0, 102, 153));
 
@@ -313,7 +315,7 @@ public class App extends javax.swing.JFrame {
                 confirmSellMouseExited(evt);
             }
         });
-        confirmSell.setLayout(new java.awt.GridLayout());
+        confirmSell.setLayout(new java.awt.GridLayout(1, 0));
 
         confirmSellTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         confirmSellTxt.setForeground(new java.awt.Color(0, 102, 204));
@@ -354,7 +356,7 @@ public class App extends javax.swing.JFrame {
 
         quickSellWindow.getContentPane().add(rootQuickSell);
 
-        quickStockWindow.getContentPane().setLayout(new java.awt.GridLayout());
+        quickStockWindow.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         rootQuickStock.setBackground(new java.awt.Color(0, 102, 153));
 
@@ -374,7 +376,7 @@ public class App extends javax.swing.JFrame {
                 confirmStockMouseExited(evt);
             }
         });
-        confirmStock.setLayout(new java.awt.GridLayout());
+        confirmStock.setLayout(new java.awt.GridLayout(1, 0));
 
         confirmStockTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         confirmStockTxt.setForeground(new java.awt.Color(0, 102, 204));
@@ -415,7 +417,7 @@ public class App extends javax.swing.JFrame {
 
         quickStockWindow.getContentPane().add(rootQuickStock);
 
-        addInventory.getContentPane().setLayout(new java.awt.GridLayout());
+        addInventory.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         otherRoot.setBackground(new java.awt.Color(0, 102, 153));
         otherRoot.setForeground(new java.awt.Color(0, 102, 153));
@@ -434,7 +436,7 @@ public class App extends javax.swing.JFrame {
                 addImageMouseExited(evt);
             }
         });
-        addImage.setLayout(new java.awt.GridLayout());
+        addImage.setLayout(new java.awt.GridLayout(1, 0));
 
         addImageTxt.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         addImageTxt.setForeground(new java.awt.Color(0, 102, 204));
@@ -444,13 +446,6 @@ public class App extends javax.swing.JFrame {
 
         nameLabel.setForeground(new java.awt.Color(255, 255, 255));
         nameLabel.setText("Product Name");
-
-        available.setBackground(new java.awt.Color(0, 102, 153));
-        available.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        available.setForeground(new java.awt.Color(255, 255, 255));
-        available.setText("Available");
-        available.setBorder(null);
-        available.setFocusable(false);
 
         addProduct.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -463,7 +458,7 @@ public class App extends javax.swing.JFrame {
                 addProductMouseExited(evt);
             }
         });
-        addProduct.setLayout(new java.awt.GridLayout());
+        addProduct.setLayout(new java.awt.GridLayout(1, 0));
 
         addProductTxt.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         addProductTxt.setForeground(new java.awt.Color(0, 102, 204));
@@ -503,9 +498,7 @@ public class App extends javax.swing.JFrame {
                     .addComponent(description)
                     .addComponent(name)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addInventoryRootLayout.createSequentialGroup()
-                        .addGap(0, 269, Short.MAX_VALUE)
-                        .addComponent(available)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(0, 367, Short.MAX_VALUE)
                         .addGroup(addInventoryRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(addProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
                             .addComponent(addImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -554,9 +547,7 @@ public class App extends javax.swing.JFrame {
                 .addGap(3, 3, 3)
                 .addComponent(supplier, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21)
-                .addGroup(addInventoryRootLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(available)
-                    .addComponent(addImage, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(addImage, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(addProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(170, 170, 170))
@@ -581,7 +572,7 @@ public class App extends javax.swing.JFrame {
 
         addInventory.getContentPane().add(otherRoot);
 
-        editInventory.getContentPane().setLayout(new java.awt.GridLayout());
+        editInventory.getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         otherRoot1.setBackground(new java.awt.Color(0, 102, 153));
         otherRoot1.setForeground(new java.awt.Color(0, 102, 153));
@@ -600,7 +591,7 @@ public class App extends javax.swing.JFrame {
                 editImageMouseExited(evt);
             }
         });
-        editImage.setLayout(new java.awt.GridLayout());
+        editImage.setLayout(new java.awt.GridLayout(1, 0));
 
         addImageTxt1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         addImageTxt1.setForeground(new java.awt.Color(0, 102, 204));
@@ -610,13 +601,6 @@ public class App extends javax.swing.JFrame {
 
         nameLabel1.setForeground(new java.awt.Color(255, 255, 255));
         nameLabel1.setText("Product Name");
-
-        available1.setBackground(new java.awt.Color(0, 102, 153));
-        available1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        available1.setForeground(new java.awt.Color(255, 255, 255));
-        available1.setText("Available");
-        available1.setBorder(null);
-        available1.setFocusable(false);
 
         editProduct.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -629,7 +613,7 @@ public class App extends javax.swing.JFrame {
                 editProductMouseExited(evt);
             }
         });
-        editProduct.setLayout(new java.awt.GridLayout());
+        editProduct.setLayout(new java.awt.GridLayout(1, 0));
 
         addProductTxt1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         addProductTxt1.setForeground(new java.awt.Color(0, 102, 204));
@@ -669,9 +653,7 @@ public class App extends javax.swing.JFrame {
                     .addComponent(description1)
                     .addComponent(name1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, addInventoryRoot1Layout.createSequentialGroup()
-                        .addGap(0, 269, Short.MAX_VALUE)
-                        .addComponent(available1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(0, 367, Short.MAX_VALUE)
                         .addGroup(addInventoryRoot1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(editProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
                             .addComponent(editImage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -720,9 +702,7 @@ public class App extends javax.swing.JFrame {
                 .addGap(3, 3, 3)
                 .addComponent(supplier1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21)
-                .addGroup(addInventoryRoot1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(available1)
-                    .addComponent(editImage, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(editImage, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(editProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(170, 170, 170))
@@ -749,7 +729,7 @@ public class App extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
-        getContentPane().setLayout(new java.awt.GridLayout());
+        getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
         root.setBackground(new java.awt.Color(51, 0, 51));
         root.setLayout(new java.awt.BorderLayout());
@@ -757,11 +737,6 @@ public class App extends javax.swing.JFrame {
         mainContent.setBackground(new java.awt.Color(0, 102, 153));
         mainContent.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        products.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item2", "Item3" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
         products.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         products.setToolTipText("");
         products.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -774,7 +749,7 @@ public class App extends javax.swing.JFrame {
         mainContent.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 124, 498, 209));
 
         imagePane.setBackground(new java.awt.Color(255, 255, 255));
-        imagePane.setLayout(new java.awt.GridLayout());
+        imagePane.setLayout(new java.awt.GridLayout(1, 0));
 
         productImage.setText("Product");
         imagePane.add(productImage);
@@ -803,7 +778,7 @@ public class App extends javax.swing.JFrame {
                 searchButtonMouseExited(evt);
             }
         });
-        searchButton.setLayout(new java.awt.GridLayout());
+        searchButton.setLayout(new java.awt.GridLayout(1, 0));
 
         searchButtonTxt.setForeground(new java.awt.Color(0, 102, 204));
         searchButtonTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -854,7 +829,7 @@ public class App extends javax.swing.JFrame {
                 quickStockMouseExited(evt);
             }
         });
-        quickStock.setLayout(new java.awt.GridLayout());
+        quickStock.setLayout(new java.awt.GridLayout(1, 0));
 
         quickStockTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         quickStockTxt.setForeground(new java.awt.Color(0, 102, 204));
@@ -874,7 +849,7 @@ public class App extends javax.swing.JFrame {
                 quickSellMouseExited(evt);
             }
         });
-        quickSell.setLayout(new java.awt.GridLayout());
+        quickSell.setLayout(new java.awt.GridLayout(1, 0));
 
         quickSellTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         quickSellTxt.setForeground(new java.awt.Color(0, 102, 204));
@@ -894,7 +869,7 @@ public class App extends javax.swing.JFrame {
                 manageMouseExited(evt);
             }
         });
-        manage.setLayout(new java.awt.GridLayout());
+        manage.setLayout(new java.awt.GridLayout(1, 0));
 
         manageTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         manageTxt.setForeground(new java.awt.Color(0, 102, 204));
@@ -914,7 +889,7 @@ public class App extends javax.swing.JFrame {
                 logoutMouseExited(evt);
             }
         });
-        logout.setLayout(new java.awt.GridLayout());
+        logout.setLayout(new java.awt.GridLayout(1, 0));
 
         logoutTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         logoutTxt.setForeground(new java.awt.Color(0, 102, 204));
@@ -978,7 +953,7 @@ public class App extends javax.swing.JFrame {
 
     private void searchBarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchBarMouseEntered
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_searchBarMouseEntered
 
     private void searchBarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchBarMouseExited
@@ -993,69 +968,69 @@ public class App extends javax.swing.JFrame {
 
     private void searchButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseEntered
         // TODO add your handling code here:
-        buttonHoverBehaviour(searchButton,searchButtonTxt,HOVER_COLOR,WHITE);
+        buttonHoverBehaviour(searchButton, searchButtonTxt, HOVER_COLOR, WHITE);
     }//GEN-LAST:event_searchButtonMouseEntered
 
     private void searchButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseExited
         // TODO add your handling code here:
-        buttonExitBehaviour(searchButton,searchButtonTxt,WHITE,ORIGINAL_TEXT_COLOR);
+        buttonExitBehaviour(searchButton, searchButtonTxt, WHITE, ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_searchButtonMouseExited
 
     private void quickStockMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickStockMouseEntered
         // TODO add your handling code here:
-        buttonHoverBehaviour(quickStock,quickStockTxt,HOVER_COLOR,WHITE);
+        buttonHoverBehaviour(quickStock, quickStockTxt, HOVER_COLOR, WHITE);
     }//GEN-LAST:event_quickStockMouseEntered
 
     private void quickStockMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickStockMouseExited
         // TODO add your handling code here:
-        buttonExitBehaviour(quickStock,quickStockTxt,WHITE,ORIGINAL_TEXT_COLOR);
+        buttonExitBehaviour(quickStock, quickStockTxt, WHITE, ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_quickStockMouseExited
 
     private void quickSellMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickSellMouseEntered
         // TODO add your handling code here:
-         buttonHoverBehaviour(quickSell,quickSellTxt,HOVER_COLOR,WHITE);
+        buttonHoverBehaviour(quickSell, quickSellTxt, HOVER_COLOR, WHITE);
     }//GEN-LAST:event_quickSellMouseEntered
 
     private void quickSellMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickSellMouseExited
         // TODO add your handling code here:
-        buttonExitBehaviour(quickSell,quickSellTxt,WHITE,ORIGINAL_TEXT_COLOR);
+        buttonExitBehaviour(quickSell, quickSellTxt, WHITE, ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_quickSellMouseExited
 
     private void manageMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageMouseEntered
         // TODO add your handling code here:
-        buttonHoverBehaviour(manage,manageTxt,HOVER_COLOR,WHITE);
+        buttonHoverBehaviour(manage, manageTxt, HOVER_COLOR, WHITE);
     }//GEN-LAST:event_manageMouseEntered
 
     private void manageMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageMouseExited
         // TODO add your handling code here:
-        buttonExitBehaviour(manage,manageTxt,WHITE,ORIGINAL_TEXT_COLOR);
+        buttonExitBehaviour(manage, manageTxt, WHITE, ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_manageMouseExited
 
     private void logoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseEntered
         // TODO add your handling code here:
-        buttonHoverBehaviour(logout,logoutTxt,RED,WHITE);
-        
+        buttonHoverBehaviour(logout, logoutTxt, RED, WHITE);
+
     }//GEN-LAST:event_logoutMouseEntered
 
     private void logoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseExited
         // TODO add your handling code here:
-        buttonExitBehaviour(logout,logoutTxt,WHITE,ORIGINAL_TEXT_COLOR);
-        
+        buttonExitBehaviour(logout, logoutTxt, WHITE, ORIGINAL_TEXT_COLOR);
+
     }//GEN-LAST:event_logoutMouseExited
 
     private void productsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productsMouseClicked
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_productsMouseClicked
 
     private void quickStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickStockMouseClicked
         // TODO add your handling code here:
-        openWindow(quickStockWindow, "Quick stock",500,250);
+        openWindow(quickStockWindow, "Quick stock", 250, 500);
     }//GEN-LAST:event_quickStockMouseClicked
 
     private void manageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageMouseClicked
         // TODO add your handling code here:
-        openWindow(manageWindow, "Manage",450,500);
+        openWindow(manageWindow, "Manage", 450, 450);
     }//GEN-LAST:event_manageMouseClicked
 
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
@@ -1065,7 +1040,7 @@ public class App extends javax.swing.JFrame {
 
     private void quickSellMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickSellMouseClicked
         // TODO add your handling code here:
-        openWindow(quickSellWindow,"Quick sell",500,250);
+        openWindow(quickSellWindow, "Quick sell", 250, 500);
     }//GEN-LAST:event_quickSellMouseClicked
 
     private void itemInfoTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemInfoTxtMouseEntered
@@ -1075,53 +1050,52 @@ public class App extends javax.swing.JFrame {
 
     private void deleteItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteItemMouseClicked
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_deleteItemMouseClicked
 
     private void deleteItemMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteItemMouseEntered
         // TODO add your handling code here:
-        buttonHoverBehaviour(deleteItem,deleteItemTxt,HOVER_COLOR,WHITE);
+        buttonHoverBehaviour(deleteItem, deleteItemTxt, HOVER_COLOR, WHITE);
     }//GEN-LAST:event_deleteItemMouseEntered
 
     private void deleteItemMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteItemMouseExited
         // TODO add your handling code here:
-        buttonExitBehaviour(deleteItem,deleteItemTxt,WHITE,ORIGINAL_TEXT_COLOR);
+        buttonExitBehaviour(deleteItem, deleteItemTxt, WHITE, ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_deleteItemMouseExited
 
     private void editItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editItemMouseClicked
         // TODO add your handling code here:
-        openWindow(editInventory,"Edit item",500,500);
+        openWindow(editInventory, "Edit item", 500, 500);
     }//GEN-LAST:event_editItemMouseClicked
 
     private void editItemMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editItemMouseEntered
         // TODO add your handling code here:
-        buttonHoverBehaviour(editItem,editItemTxt,HOVER_COLOR,WHITE);
+        buttonHoverBehaviour(editItem, editItemTxt, HOVER_COLOR, WHITE);
     }//GEN-LAST:event_editItemMouseEntered
 
     private void editItemMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editItemMouseExited
         // TODO add your handling code here:
-        buttonExitBehaviour(editItem,editItemTxt,WHITE,ORIGINAL_TEXT_COLOR);
+        buttonExitBehaviour(editItem, editItemTxt, WHITE, ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_editItemMouseExited
 
     private void addItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addItemMouseClicked
         // TODO add your handling code here:
-        openWindow(addInventory,"Add item",500,500);
-        
+        openWindow(addInventory, "Add item", 500, 500);
     }//GEN-LAST:event_addItemMouseClicked
 
     private void addItemMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addItemMouseEntered
         // TODO add your handling code here:
-        buttonHoverBehaviour(addItem,addItemTxt,HOVER_COLOR,WHITE);
+        buttonHoverBehaviour(addItem, addItemTxt, HOVER_COLOR, WHITE);
     }//GEN-LAST:event_addItemMouseEntered
 
     private void addItemMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addItemMouseExited
         // TODO add your handling code here:
-        buttonExitBehaviour(addItem,addItemTxt,WHITE,ORIGINAL_TEXT_COLOR);
+        buttonExitBehaviour(addItem, addItemTxt, WHITE, ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_addItemMouseExited
 
     private void searchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseEntered
         // TODO add your handling code here:
-        buttonHoverBehaviour(search,searchTxt,HOVER_COLOR,WHITE);
+        buttonHoverBehaviour(search, searchTxt, HOVER_COLOR, WHITE);
     }//GEN-LAST:event_searchMouseEntered
 
     private void searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseClicked
@@ -1130,7 +1104,7 @@ public class App extends javax.swing.JFrame {
 
     private void searchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseExited
         // TODO add your handling code here:
-        buttonExitBehaviour(search,searchTxt,WHITE,ORIGINAL_TEXT_COLOR);
+        buttonExitBehaviour(search, searchTxt, WHITE, ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_searchMouseExited
 
     private void confirmSellMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmSellMouseClicked
@@ -1139,12 +1113,12 @@ public class App extends javax.swing.JFrame {
 
     private void confirmSellMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmSellMouseEntered
         // TODO add your handling code here:
-        buttonHoverBehaviour(confirmSell,confirmSellTxt,HOVER_COLOR,WHITE);
+        buttonHoverBehaviour(confirmSell, confirmSellTxt, HOVER_COLOR, WHITE);
     }//GEN-LAST:event_confirmSellMouseEntered
 
     private void confirmSellMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmSellMouseExited
         // TODO add your handling code here:
-        buttonExitBehaviour(confirmSell,confirmSellTxt,WHITE,ORIGINAL_TEXT_COLOR);
+        buttonExitBehaviour(confirmSell, confirmSellTxt, WHITE, ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_confirmSellMouseExited
 
     private void confirmStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmStockMouseClicked
@@ -1153,12 +1127,12 @@ public class App extends javax.swing.JFrame {
 
     private void confirmStockMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmStockMouseEntered
         // TODO add your handling code here:
-        buttonHoverBehaviour(confirmStock,confirmStockTxt,HOVER_COLOR,WHITE);
+        buttonHoverBehaviour(confirmStock, confirmStockTxt, HOVER_COLOR, WHITE);
     }//GEN-LAST:event_confirmStockMouseEntered
 
     private void confirmStockMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmStockMouseExited
         // TODO add your handling code here:
-        buttonExitBehaviour(confirmStock,confirmStockTxt,WHITE,ORIGINAL_TEXT_COLOR);
+        buttonExitBehaviour(confirmStock, confirmStockTxt, WHITE, ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_confirmStockMouseExited
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -1167,58 +1141,51 @@ public class App extends javax.swing.JFrame {
 
     private void addProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductMouseClicked
         // TODO add your handling code here:
-        inventory.forEach((key, value) -> {
-    System.out.println("Key: " + key + ", Value: " + value.getId());
-});
-        if(!name.getText().isEmpty() && isFloat(price.getText())){
-            //TODO
-        
-        
-        }else{
-            handleAdditionError(name.getText(),price.getText());
+        if (validItem(name.getText(), stock.getText(), price.getText())) {
+            addItem(name.getText(), stock.getText(), price.getText());
+
         }
-        
     }//GEN-LAST:event_addProductMouseClicked
 
     private void addProductMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductMouseEntered
         // TODO add your handling code here:
-            buttonHoverBehaviour(addProduct,addProductTxt,HOVER_COLOR,WHITE);
+        buttonHoverBehaviour(addProduct, addProductTxt, HOVER_COLOR, WHITE);
     }//GEN-LAST:event_addProductMouseEntered
 
     private void addProductMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductMouseExited
         // TODO add your handling code here:
-        buttonExitBehaviour(addProduct,addProductTxt,WHITE,ORIGINAL_TEXT_COLOR);
+        buttonExitBehaviour(addProduct, addProductTxt, WHITE, ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_addProductMouseExited
 
     private void addImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addImageMouseClicked
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_addImageMouseClicked
 
     private void addImageMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addImageMouseEntered
         // TODO add your handling code here:
-        buttonHoverBehaviour(addImage,addImageTxt,HOVER_COLOR,WHITE);
+        buttonHoverBehaviour(addImage, addImageTxt, HOVER_COLOR, WHITE);
     }//GEN-LAST:event_addImageMouseEntered
 
     private void addImageMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addImageMouseExited
         // TODO add your handling code here:
-        buttonExitBehaviour(addImage,addImageTxt,WHITE,ORIGINAL_TEXT_COLOR);
+        buttonExitBehaviour(addImage, addImageTxt, WHITE, ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_addImageMouseExited
 
     private void editImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editImageMouseClicked
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_editImageMouseClicked
 
     private void editImageMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editImageMouseEntered
         // TODO add your handling code here:
-        buttonHoverBehaviour(editImage,addImageTxt1,HOVER_COLOR,WHITE);
+        buttonHoverBehaviour(editImage, addImageTxt1, HOVER_COLOR, WHITE);
     }//GEN-LAST:event_editImageMouseEntered
 
     private void editImageMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editImageMouseExited
         // TODO add your handling code here:
-         buttonExitBehaviour(editImage,addImageTxt1,WHITE,ORIGINAL_TEXT_COLOR);
-        
+        buttonExitBehaviour(editImage, addImageTxt1, WHITE, ORIGINAL_TEXT_COLOR);
+
     }//GEN-LAST:event_editImageMouseExited
 
     private void editProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductMouseClicked
@@ -1232,9 +1199,6 @@ public class App extends javax.swing.JFrame {
     private void editProductMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductMouseExited
         // TODO add your handling code here:
     }//GEN-LAST:event_editProductMouseExited
-
-    
-    
 
     /**
      * @param args the command line arguments
@@ -1270,43 +1234,46 @@ public class App extends javax.swing.JFrame {
             }
         });
     }
-            /**
- * Applies hover animation to a button (JPanel).
- *
- * @param button The button panel.
- * @param text The label inside the button.
- * @param backgroundColor The background color when hovered.
- * @param textColor The text color when hovered.
- */
-    private void buttonHoverBehaviour(JPanel button,JLabel text,Color backgroundColor,Color textColor){
+
+    /**
+     * Applies hover animation to a button (JPanel).
+     *
+     * @param button The button panel.
+     * @param text The label inside the button.
+     * @param backgroundColor The background color when hovered.
+     * @param textColor The text color when hovered.
+     */
+    private void buttonHoverBehaviour(JPanel button, JLabel text, Color backgroundColor, Color textColor) {
         button.setBackground(backgroundColor);
         button.setCursor(HAND);
         text.setForeground(textColor);
     }
-            /**
- * Applies hover animation to a button (JPanel) when the cursor exits.
- *
- * @param button The button panel.
- * @param text The label inside the button.
- * @param backgroundColor The background color when the cursor exits.
- * @param textColor The text color when the cursor exits.
- */
-    private void buttonExitBehaviour(JPanel button,JLabel text, Color backgroundColor,Color textColor){
+
+    /**
+     * Applies hover animation to a button (JPanel) when the cursor exits.
+     *
+     * @param button The button panel.
+     * @param text The label inside the button.
+     * @param backgroundColor The background color when the cursor exits.
+     * @param textColor The text color when the cursor exits.
+     */
+    private void buttonExitBehaviour(JPanel button, JLabel text, Color backgroundColor, Color textColor) {
 
         button.setBackground(backgroundColor);
         text.setForeground(textColor);
     }
-            /**
- * Opens a new JFrame from any button.
- *
- * @param window The target JFrame.
- * @param title The JFrame title.
- * @param height The JFrame height.
- * @param width The JFrame width.
- */
-    private void openWindow(JFrame window, String title,int height, int width){
-    //    if(openWindows<MAX_WINDOWS){
-        
+
+    /**
+     * Opens a new JFrame from any button.
+     *
+     * @param window The target JFrame.
+     * @param title The JFrame title.
+     * @param height The JFrame height.
+     * @param width The JFrame width.
+     */
+    private void openWindow(JFrame window, String title, int height, int width) {
+        //    if(openWindows<MAX_WINDOWS){
+
         window.setSize(width, height);
         window.setLocationRelativeTo(null);
         window.setResizable(false);
@@ -1314,70 +1281,126 @@ public class App extends javax.swing.JFrame {
         overrideWindowClose(window);
         openWindows++;
         window.setVisible(true);//}else{
-      //  JOptionPane.showMessageDialog(null,"You have an operation in process");
-       // }
-    
+        //  JOptionPane.showMessageDialog(null,"You have an operation in process");
+        // }
+
     }
- /**
- * Overrides default window close behaviour for a JFrame initialized with openWindow.
- *Asks the user to confirm before closing the JFrame.
- * @param window The target JFrame.
- */
-    private void overrideWindowClose(JFrame window){
-            window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+    /**
+     * Overrides default window close behaviour for a JFrame initialized with
+     * openWindow. Asks the user to confirm before closing the JFrame.
+     *
+     * @param window The target JFrame.
+     */
+    private void overrideWindowClose(JFrame window) {
+        window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         window.addWindowListener(new java.awt.event.WindowAdapter() {
-        @Override
-        public void windowClosing(java.awt.event.WindowEvent e){
-            int result=JOptionPane.showConfirmDialog(window, "Do you really want to close this window?","Confirm Exit",JOptionPane.YES_NO_OPTION);
-            
-        
-        if(result == JOptionPane.YES_OPTION){
-            openWindows--;
-            window.dispose();
-        }}
-        
-        });}
- /**
- * Checks if a string is a valid float.
- * Displays an error if it is not.
- * @param number The string to evaluate.
- * @return true if the string is a valid float;false otherwise.
- */
-    private boolean isFloat(String number){
-        if(number.trim().isEmpty()){
-            JOptionPane.showMessageDialog(null,"The price cannot be empty");
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                int result = JOptionPane.showConfirmDialog(window, "Do you really want to close this window?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
+
+                if (result == JOptionPane.YES_OPTION) {
+                    openWindows--;
+                    window.dispose();
+                }
+            }
+
+        });
+    }
+
+    /**
+     * Checks if a string is a valid float. Displays an error if it is not.
+     *
+     * @param number The string to evaluate.
+     * @return true if the string is a valid float;false otherwise.
+     */
+    private boolean isFloat(String number) {
+        if (number.trim().isEmpty()) {
             return false;
         }
-        try{
+        try {
             Float.valueOf(number.trim());
             return true;
-        
-        
-        
-        }catch(NumberFormatException  e){
-        JOptionPane.showMessageDialog(null,"The price is not a valid number");
-        return false;
-        
-        
-        
+
+        } catch (NumberFormatException e) {
+            return false;
+
         }
     }
- /**
- * Handles validation errors for missing fields when creating an Item object trough the UI.
- * Displays an error based on which fields are missing.\
- * @param name The String name to initialize the object with.
- * @param price The float price to initialize the object with;expected to be validated by isFloat beforehand.
- */
-    private void handleAdditionError(String name, String price){
-        if(name.isEmpty() && !price.isEmpty()){
-        JOptionPane.showMessageDialog(null,"The name cannot be empty");
-        }else{
-        JOptionPane.showMessageDialog(null,"The product requires at least a name and a price");
-        
-        
+
+    /**
+     * Checks if a string is a valid int. Displays an error if it is not.
+     *
+     * @param number The string to evaluate.
+     * @return true if the string is a valid float;false otherwise.
+     */
+    private boolean isInt(String number) {
+        try {
+            Integer.valueOf(number.trim());
+            return true;
+
+        } catch (NumberFormatException e) {
+            return false;
+
         }
-        
     }
+
+    /**
+     * Validates the information of an Item before adding it to the inventory.
+     *
+     * @param name the name of the item.
+     * @param stock the ammount of units.
+     * @param price the price.
+     * @return true if the information is valid;false otherwise.
+     */
+    private boolean validItem(String name, String stock, String price) {
+        if (name.trim().isEmpty()) {
+            showError("The product must have a name");
+            return false;
+        }
+
+        if (stock.trim().isEmpty()) {
+            showError("The item must have a stock quantity");
+            return false;
+        }
+
+        if (!isInt(stock)) {
+            showError("The stock must be an integer");
+            return false;
+        }
+
+        if (price.trim().isEmpty()) {
+            showError("The item must have a price");
+            return false;
+        }
+
+        if (!isFloat(price)) {
+            showError("The price must be a decimal number");
+            return false;
+        }
+
+        return true;
+    }
+    /**
+     * Shows an error message.
+     * @param message the message to display.
+     */
+    private void showError(String message) {
+        JOptionPane.showMessageDialog(null, message);
+
+    }
+    /**
+     * Adds an Item object to the inventory.
+     * @param nameField the name of the item.
+     * @param stockField the ammount of the item.
+     * @param priceField the price of the item.
+     */
+    private void addItem(String nameField, String stockField, String priceField) {
+        id++;
+        boolean availability = Integer.parseInt(stock.getText()) > 0;
+        inventory.put(id, new Item.Builder(id, nameField, Float.parseFloat(priceField), availability).stock(Integer.parseInt(stockField)).build());
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel addImage;
     private javax.swing.JLabel addImageTxt;
@@ -1394,8 +1417,6 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel ammountStockedLabel;
     private javax.swing.JTextField ammountToSell;
     private javax.swing.JTextField ammountToStock;
-    private javax.swing.JCheckBox available;
-    private javax.swing.JCheckBox available1;
     private javax.swing.JPanel buttonsPane;
     private javax.swing.JPanel buttonsPane1;
     private javax.swing.JTextField category;
@@ -1421,9 +1442,9 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel employeeInfo;
     private javax.swing.JPanel employeePicPane;
     private javax.swing.JPanel imagePane;
+    private javax.swing.JList<String> inventoryList;
     private javax.swing.JScrollPane itemInfoPane;
     private javax.swing.JTextArea itemInfoTxt;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

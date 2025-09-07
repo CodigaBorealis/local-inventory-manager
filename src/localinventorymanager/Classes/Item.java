@@ -48,7 +48,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Item{" + "name=" + name + ", description=" + description + ", category=" + category + ", stock=" + stock + ", price=" + price + ", id=" + id + ", status=" + status + ", imagePath=" + imagePath + ", stockBound=" + stockBound + ", supplier=" + supplier + '}';
+        return "name: " + name +"\n "+ "description: " + description +"\n"+ "category: " + category +"\n"+ "stock: " + stock +"\n"+"price: " + price +"\n"+"id: " + id +"\n"+"status: " + status +"\n"+"stockBound: " + stockBound +"\n"+ "supplier:" + supplier;
     }
 
     public String getName() {
