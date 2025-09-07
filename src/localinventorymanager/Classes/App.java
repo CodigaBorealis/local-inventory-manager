@@ -1156,6 +1156,14 @@ public class App extends javax.swing.JFrame {
 
     private void addProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductMouseClicked
         // TODO add your handling code here:
+        if(!name.getText().isEmpty() && isFloat(price.getText())){
+            //TODO
+        
+        
+        }else{
+            handleAdditionError(name.getText(),price.getText());
+        }
+        
     }//GEN-LAST:event_addProductMouseClicked
 
     private void addProductMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductMouseEntered
@@ -1249,7 +1257,7 @@ public class App extends javax.swing.JFrame {
         });
     }
     
-    public void buttonHoverBehaviour(JPanel button,JLabel text,Color backgroundColor,Color textColor){
+    private void buttonHoverBehaviour(JPanel button,JLabel text,Color backgroundColor,Color textColor){
         button.setBackground(backgroundColor);
         button.setCursor(HAND);
         text.setForeground(textColor);
@@ -1259,7 +1267,7 @@ public class App extends javax.swing.JFrame {
     
     
     }
-    public void buttonExitBehaviour(JPanel button,JLabel text, Color backgroundColor,Color textColor){
+    private void buttonExitBehaviour(JPanel button,JLabel text, Color backgroundColor,Color textColor){
         button.setBackground(backgroundColor);
         text.setForeground(textColor);
         
@@ -1268,7 +1276,7 @@ public class App extends javax.swing.JFrame {
     
     
     }
-    public void openWindow(JFrame window, String title,int height, int width){
+    private void openWindow(JFrame window, String title,int height, int width){
     //    if(openWindows<MAX_WINDOWS){
         
         window.setSize(height, width);
@@ -1282,7 +1290,7 @@ public class App extends javax.swing.JFrame {
        // }
     
     }
-    public void overrideWindowClose(JFrame window){
+    private void overrideWindowClose(JFrame window){
             window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         window.addWindowListener(new java.awt.event.WindowAdapter() {
         @Override
@@ -1296,6 +1304,35 @@ public class App extends javax.swing.JFrame {
         }}
         
         });}
+    private boolean isFloat(String number){
+        if(number.isEmpty()){
+            JOptionPane.showMessageDialog(null,"The price cannot be empty");
+            return false;
+        }
+        try{
+            Float.valueOf(number);
+            return true;
+        
+        
+        
+        }catch(Exception e){
+        JOptionPane.showMessageDialog(null,"The price is not a valid number");
+        return false;
+        
+        
+        
+        }
+    }
+    private void handleAdditionError(String name, String price){
+        if(name.isEmpty() && !price.isEmpty()){
+        JOptionPane.showMessageDialog(null,"The name cannot be empty");
+        }else{
+        JOptionPane.showMessageDialog(null,"The product requires at least a name and a price");
+        
+        
+        }
+        
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel addImage;
     private javax.swing.JLabel addImageTxt;
