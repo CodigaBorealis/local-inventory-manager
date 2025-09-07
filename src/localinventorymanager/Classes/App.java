@@ -12,12 +12,14 @@ import javax.swing.*;
  * @author XD
  */
 public class App extends javax.swing.JFrame {
-    final Color WHITE=new Color(255,255,255);
-    final Color RED=new Color(255,0,0);
-    final Color HOVERCOLOR=new Color(99, 190, 255);
-    final Color ORIGINALTEXTCOLOR=new Color(0,102,204);
-    final Cursor HAND=new Cursor(Cursor.HAND_CURSOR);
-    final Cursor NORMAL=new Cursor(Cursor.DEFAULT_CURSOR);
+    private final Color WHITE=new Color(255,255,255);
+    private final Color RED=new Color(255,0,0);
+    private final Color HOVER_COLOR=new Color(99, 190, 255);
+    private final Color ORIGINAL_TEXT_COLOR=new Color(0,102,204);
+    private final Cursor HAND=new Cursor(Cursor.HAND_CURSOR);
+    private final Cursor NORMAL=new Cursor(Cursor.DEFAULT_CURSOR);
+    private final int MAX_WINDOWS=2;
+    private int openWindows=1;
     /**
      * Creates new form App
      */
@@ -35,7 +37,22 @@ public class App extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jRadioButton1 = new javax.swing.JRadioButton();
+        manageWindow = new javax.swing.JFrame();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
+        jTextField1 = new javax.swing.JTextField();
+        buttonsPane1 = new javax.swing.JPanel();
+        deleteItem = new javax.swing.JPanel();
+        deleteItemTxt = new javax.swing.JLabel();
+        editItem = new javax.swing.JPanel();
+        editItemTxt = new javax.swing.JLabel();
+        addItem = new javax.swing.JPanel();
+        addItemTxt = new javax.swing.JLabel();
+        search = new javax.swing.JPanel();
+        searchTxt = new javax.swing.JLabel();
+        quickSellWindow = new javax.swing.JFrame();
+        quickStockWindow = new javax.swing.JFrame();
         root = new javax.swing.JPanel();
         mainContent = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -57,10 +74,173 @@ public class App extends javax.swing.JFrame {
         manageTxt = new javax.swing.JLabel();
         logout = new javax.swing.JPanel();
         logoutTxt = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        itemInfoPane = new javax.swing.JScrollPane();
+        itemInfoTxt = new javax.swing.JTextArea();
 
-        jRadioButton1.setText("jRadioButton1");
+        manageWindow.getContentPane().setLayout(new java.awt.GridLayout());
+
+        jPanel1.setBackground(new java.awt.Color(0, 102, 153));
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(jList1);
+
+        jTextField1.setText("jTextField1");
+
+        buttonsPane1.setBackground(new java.awt.Color(0, 102, 153));
+        buttonsPane1.setForeground(new java.awt.Color(102, 255, 102));
+
+        deleteItem.setBackground(new java.awt.Color(255, 255, 255));
+        deleteItem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteItemMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deleteItemMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                deleteItemMouseExited(evt);
+            }
+        });
+        deleteItem.setLayout(new java.awt.GridLayout());
+
+        deleteItemTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        deleteItemTxt.setForeground(new java.awt.Color(0, 102, 204));
+        deleteItemTxt.setText("Delete item");
+        deleteItem.add(deleteItemTxt);
+
+        editItem.setBackground(new java.awt.Color(255, 255, 255));
+        editItem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editItemMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editItemMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editItemMouseExited(evt);
+            }
+        });
+        editItem.setLayout(new java.awt.GridLayout());
+
+        editItemTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        editItemTxt.setForeground(new java.awt.Color(0, 102, 204));
+        editItemTxt.setText("Edit item");
+        editItem.add(editItemTxt);
+
+        addItem.setBackground(new java.awt.Color(255, 255, 255));
+        addItem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addItemMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                addItemMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                addItemMouseExited(evt);
+            }
+        });
+        addItem.setLayout(new java.awt.GridLayout());
+
+        addItemTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        addItemTxt.setForeground(new java.awt.Color(0, 102, 204));
+        addItemTxt.setText("Add item");
+        addItem.add(addItemTxt);
+
+        javax.swing.GroupLayout buttonsPane1Layout = new javax.swing.GroupLayout(buttonsPane1);
+        buttonsPane1.setLayout(buttonsPane1Layout);
+        buttonsPane1Layout.setHorizontalGroup(
+            buttonsPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttonsPane1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(deleteItem, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(editItem, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(addItem, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        buttonsPane1Layout.setVerticalGroup(
+            buttonsPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buttonsPane1Layout.createSequentialGroup()
+                .addGroup(buttonsPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(editItem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(deleteItem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(addItem, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        search.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                searchMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                searchMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                searchMouseExited(evt);
+            }
+        });
+        search.setLayout(new java.awt.GridLayout());
+
+        searchTxt.setForeground(new java.awt.Color(0, 102, 204));
+        searchTxt.setText("Search");
+        search.add(searchTxt);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane2)
+                    .addComponent(buttonsPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(search, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTextField1)
+                    .addComponent(search, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(16, 16, 16)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(buttonsPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
+        manageWindow.getContentPane().add(jPanel1);
+
+        javax.swing.GroupLayout quickSellWindowLayout = new javax.swing.GroupLayout(quickSellWindow.getContentPane());
+        quickSellWindow.getContentPane().setLayout(quickSellWindowLayout);
+        quickSellWindowLayout.setHorizontalGroup(
+            quickSellWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        quickSellWindowLayout.setVerticalGroup(
+            quickSellWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        javax.swing.GroupLayout quickStockWindowLayout = new javax.swing.GroupLayout(quickStockWindow.getContentPane());
+        quickStockWindow.getContentPane().setLayout(quickStockWindowLayout);
+        quickStockWindowLayout.setHorizontalGroup(
+            quickStockWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        quickStockWindowLayout.setVerticalGroup(
+            quickStockWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -260,25 +440,25 @@ public class App extends javax.swing.JFrame {
 
         mainContent.add(buttonsPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 459, -1, 40));
 
-        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane2.setToolTipText("");
-        jScrollPane2.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        itemInfoPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        itemInfoPane.setToolTipText("");
+        itemInfoPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setLineWrap(true);
-        jTextArea1.setRows(5);
-        jTextArea1.setText("tgretggfdsfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        jTextArea1.setWrapStyleWord(true);
-        jTextArea1.setFocusable(false);
-        jTextArea1.setRequestFocusEnabled(false);
-        jTextArea1.addMouseListener(new java.awt.event.MouseAdapter() {
+        itemInfoTxt.setColumns(20);
+        itemInfoTxt.setLineWrap(true);
+        itemInfoTxt.setRows(5);
+        itemInfoTxt.setText("tgretggfdsfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        itemInfoTxt.setWrapStyleWord(true);
+        itemInfoTxt.setFocusable(false);
+        itemInfoTxt.setRequestFocusEnabled(false);
+        itemInfoTxt.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jTextArea1MouseEntered(evt);
+                itemInfoTxtMouseEntered(evt);
             }
         });
-        jScrollPane2.setViewportView(jTextArea1);
+        itemInfoPane.setViewportView(itemInfoTxt);
 
-        mainContent.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 120, 380, 150));
+        mainContent.add(itemInfoPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 120, 380, 150));
 
         root.add(mainContent, java.awt.BorderLayout.CENTER);
 
@@ -304,42 +484,42 @@ public class App extends javax.swing.JFrame {
 
     private void searchButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseEntered
         // TODO add your handling code here:
-        buttonHoverBehaviour(searchButton,searchButtonTxt,HOVERCOLOR,WHITE);
+        buttonHoverBehaviour(searchButton,searchButtonTxt,HOVER_COLOR,WHITE);
     }//GEN-LAST:event_searchButtonMouseEntered
 
     private void searchButtonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseExited
         // TODO add your handling code here:
-        buttonExitBehaviour(searchButton,searchButtonTxt,WHITE,ORIGINALTEXTCOLOR);
+        buttonExitBehaviour(searchButton,searchButtonTxt,WHITE,ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_searchButtonMouseExited
 
     private void quickStockMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickStockMouseEntered
         // TODO add your handling code here:
-        buttonHoverBehaviour(quickStock,quickStockTxt,HOVERCOLOR,WHITE);
+        buttonHoverBehaviour(quickStock,quickStockTxt,HOVER_COLOR,WHITE);
     }//GEN-LAST:event_quickStockMouseEntered
 
     private void quickStockMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickStockMouseExited
         // TODO add your handling code here:
-        buttonExitBehaviour(quickStock,quickStockTxt,WHITE,ORIGINALTEXTCOLOR);
+        buttonExitBehaviour(quickStock,quickStockTxt,WHITE,ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_quickStockMouseExited
 
     private void quickSellMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickSellMouseEntered
         // TODO add your handling code here:
-         buttonHoverBehaviour(quickSell,quickSellTxt,HOVERCOLOR,WHITE);
+         buttonHoverBehaviour(quickSell,quickSellTxt,HOVER_COLOR,WHITE);
     }//GEN-LAST:event_quickSellMouseEntered
 
     private void quickSellMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickSellMouseExited
         // TODO add your handling code here:
-        buttonExitBehaviour(quickSell,quickSellTxt,WHITE,ORIGINALTEXTCOLOR);
+        buttonExitBehaviour(quickSell,quickSellTxt,WHITE,ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_quickSellMouseExited
 
     private void manageMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageMouseEntered
         // TODO add your handling code here:
-        buttonHoverBehaviour(manage,manageTxt,HOVERCOLOR,WHITE);
+        buttonHoverBehaviour(manage,manageTxt,HOVER_COLOR,WHITE);
     }//GEN-LAST:event_manageMouseEntered
 
     private void manageMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageMouseExited
         // TODO add your handling code here:
-        buttonExitBehaviour(manage,manageTxt,WHITE,ORIGINALTEXTCOLOR);
+        buttonExitBehaviour(manage,manageTxt,WHITE,ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_manageMouseExited
 
     private void logoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseEntered
@@ -350,7 +530,7 @@ public class App extends javax.swing.JFrame {
 
     private void logoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseExited
         // TODO add your handling code here:
-        buttonExitBehaviour(logout,logoutTxt,WHITE,ORIGINALTEXTCOLOR);
+        buttonExitBehaviour(logout,logoutTxt,WHITE,ORIGINAL_TEXT_COLOR);
         
     }//GEN-LAST:event_logoutMouseExited
 
@@ -361,24 +541,87 @@ public class App extends javax.swing.JFrame {
 
     private void quickStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickStockMouseClicked
         // TODO add your handling code here:
+        openWindow(quickStockWindow, "Quick stock",300,300);
     }//GEN-LAST:event_quickStockMouseClicked
 
     private void manageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageMouseClicked
         // TODO add your handling code here:
+        openWindow(manageWindow, "Manage",450,500);
     }//GEN-LAST:event_manageMouseClicked
 
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
         // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_logoutMouseClicked
 
     private void quickSellMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickSellMouseClicked
         // TODO add your handling code here:
+        openWindow(quickSellWindow,"Quick sell",300,300);
     }//GEN-LAST:event_quickSellMouseClicked
 
-    private void jTextArea1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextArea1MouseEntered
+    private void itemInfoTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemInfoTxtMouseEntered
         // TODO add your handling code here:
-        jTextArea1.setCursor(NORMAL);
-    }//GEN-LAST:event_jTextArea1MouseEntered
+        itemInfoTxt.setCursor(NORMAL);
+    }//GEN-LAST:event_itemInfoTxtMouseEntered
+
+    private void deleteItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteItemMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_deleteItemMouseClicked
+
+    private void deleteItemMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteItemMouseEntered
+        // TODO add your handling code here:
+        buttonHoverBehaviour(deleteItem,deleteItemTxt,HOVER_COLOR,WHITE);
+    }//GEN-LAST:event_deleteItemMouseEntered
+
+    private void deleteItemMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteItemMouseExited
+        // TODO add your handling code here:
+        buttonExitBehaviour(deleteItem,deleteItemTxt,WHITE,ORIGINAL_TEXT_COLOR);
+    }//GEN-LAST:event_deleteItemMouseExited
+
+    private void editItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editItemMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_editItemMouseClicked
+
+    private void editItemMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editItemMouseEntered
+        // TODO add your handling code here:
+        buttonHoverBehaviour(editItem,editItemTxt,HOVER_COLOR,WHITE);
+    }//GEN-LAST:event_editItemMouseEntered
+
+    private void editItemMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editItemMouseExited
+        // TODO add your handling code here:
+        buttonExitBehaviour(editItem,editItemTxt,WHITE,ORIGINAL_TEXT_COLOR);
+    }//GEN-LAST:event_editItemMouseExited
+
+    private void addItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addItemMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_addItemMouseClicked
+
+    private void addItemMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addItemMouseEntered
+        // TODO add your handling code here:
+        buttonHoverBehaviour(addItem,addItemTxt,HOVER_COLOR,WHITE);
+    }//GEN-LAST:event_addItemMouseEntered
+
+    private void addItemMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addItemMouseExited
+        // TODO add your handling code here:
+        buttonExitBehaviour(addItem,addItemTxt,WHITE,ORIGINAL_TEXT_COLOR);
+    }//GEN-LAST:event_addItemMouseExited
+
+    private void searchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseEntered
+        // TODO add your handling code here:
+        buttonHoverBehaviour(search,searchTxt,HOVER_COLOR,WHITE);
+    }//GEN-LAST:event_searchMouseEntered
+
+    private void searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchMouseClicked
+
+    private void searchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseExited
+        // TODO add your handling code here:
+        buttonExitBehaviour(search,searchTxt,WHITE,ORIGINAL_TEXT_COLOR);
+    }//GEN-LAST:event_searchMouseExited
 
     
     
@@ -428,7 +671,7 @@ public class App extends javax.swing.JFrame {
     
     
     }
-        public void buttonExitBehaviour(JPanel button,JLabel text, Color backgroundColor,Color textColor){
+    public void buttonExitBehaviour(JPanel button,JLabel text, Color backgroundColor,Color textColor){
         button.setBackground(backgroundColor);
         text.setForeground(textColor);
         
@@ -437,30 +680,73 @@ public class App extends javax.swing.JFrame {
     
     
     }
+    public void openWindow(JFrame window, String title,int height, int width){
+        if(openWindows<MAX_WINDOWS){
+        
+        window.setSize(height, width);
+        window.setLocationRelativeTo(null);
+        window.setResizable(false);
+        window.setTitle(title);
+        overrideWindowClose(window);
+        openWindows++;
+        window.setVisible(true);}else{
+        JOptionPane.showMessageDialog(null,"You have an operation in process");
+        }
+    
+    }
+    public void overrideWindowClose(JFrame window){
+            window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        window.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosing(java.awt.event.WindowEvent e){
+            int result=JOptionPane.showConfirmDialog(window, "Do you really want to close this window?","Confirm Exit",JOptionPane.YES_NO_OPTION);
+            
+        
+        if(result == JOptionPane.YES_OPTION){
+            openWindows--;
+            window.dispose();
+        }}
+        
+        });}
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel addItem;
+    private javax.swing.JLabel addItemTxt;
     private javax.swing.JPanel buttonsPane;
+    private javax.swing.JPanel buttonsPane1;
+    private javax.swing.JPanel deleteItem;
+    private javax.swing.JLabel deleteItemTxt;
+    private javax.swing.JPanel editItem;
+    private javax.swing.JLabel editItemTxt;
     private javax.swing.JLabel employeeImage;
     private javax.swing.JLabel employeeInfo;
     private javax.swing.JPanel employeePicPane;
     private javax.swing.JPanel imagePane;
-    private javax.swing.JRadioButton jRadioButton1;
+    private javax.swing.JScrollPane itemInfoPane;
+    private javax.swing.JTextArea itemInfoTxt;
+    private javax.swing.JList<String> jList1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel logout;
     private javax.swing.JLabel logoutTxt;
     private javax.swing.JPanel mainContent;
     private javax.swing.JPanel manage;
     private javax.swing.JLabel manageTxt;
+    private javax.swing.JFrame manageWindow;
     private javax.swing.JLabel productImage;
     private javax.swing.JList<String> products;
     private javax.swing.JPanel quickSell;
     private javax.swing.JLabel quickSellTxt;
+    private javax.swing.JFrame quickSellWindow;
     private javax.swing.JPanel quickStock;
     private javax.swing.JLabel quickStockTxt;
+    private javax.swing.JFrame quickStockWindow;
     private javax.swing.JPanel root;
+    private javax.swing.JPanel search;
     private javax.swing.JTextField searchBar;
     private javax.swing.JPanel searchButton;
     private javax.swing.JLabel searchButtonTxt;
+    private javax.swing.JLabel searchTxt;
     // End of variables declaration//GEN-END:variables
 }
