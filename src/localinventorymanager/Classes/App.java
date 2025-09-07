@@ -52,7 +52,17 @@ public class App extends javax.swing.JFrame {
         search = new javax.swing.JPanel();
         searchTxt = new javax.swing.JLabel();
         quickSellWindow = new javax.swing.JFrame();
+        rootQuickSell = new javax.swing.JPanel();
+        ammountToSell = new javax.swing.JTextField();
+        confirmSell = new javax.swing.JPanel();
+        confirmSellTxt = new javax.swing.JLabel();
+        ammountSelledLabel = new javax.swing.JLabel();
         quickStockWindow = new javax.swing.JFrame();
+        rootQuickStock = new javax.swing.JPanel();
+        ammountToStock = new javax.swing.JTextField();
+        confirmStock = new javax.swing.JPanel();
+        confirmStockTxt = new javax.swing.JLabel();
+        ammountStockedLabel = new javax.swing.JLabel();
         root = new javax.swing.JPanel();
         mainContent = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -88,7 +98,11 @@ public class App extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jList1);
 
-        jTextField1.setText("jTextField1");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         buttonsPane1.setBackground(new java.awt.Color(0, 102, 153));
         buttonsPane1.setForeground(new java.awt.Color(102, 255, 102));
@@ -220,27 +234,127 @@ public class App extends javax.swing.JFrame {
 
         manageWindow.getContentPane().add(jPanel1);
 
-        javax.swing.GroupLayout quickSellWindowLayout = new javax.swing.GroupLayout(quickSellWindow.getContentPane());
-        quickSellWindow.getContentPane().setLayout(quickSellWindowLayout);
-        quickSellWindowLayout.setHorizontalGroup(
-            quickSellWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        quickSellWindow.getContentPane().setLayout(new java.awt.GridLayout());
+
+        rootQuickSell.setBackground(new java.awt.Color(0, 102, 153));
+
+        ammountToSell.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        ammountToSell.setForeground(new java.awt.Color(0, 102, 204));
+        ammountToSell.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        confirmSell.setBackground(new java.awt.Color(255, 255, 255));
+        confirmSell.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                confirmSellMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                confirmSellMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                confirmSellMouseExited(evt);
+            }
+        });
+        confirmSell.setLayout(new java.awt.GridLayout());
+
+        confirmSellTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        confirmSellTxt.setForeground(new java.awt.Color(0, 102, 204));
+        confirmSellTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        confirmSellTxt.setText("Confirm");
+        confirmSell.add(confirmSellTxt);
+
+        ammountSelledLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        ammountSelledLabel.setForeground(new java.awt.Color(255, 255, 255));
+        ammountSelledLabel.setText("Ammount retrieved");
+
+        javax.swing.GroupLayout rootQuickSellLayout = new javax.swing.GroupLayout(rootQuickSell);
+        rootQuickSell.setLayout(rootQuickSellLayout);
+        rootQuickSellLayout.setHorizontalGroup(
+            rootQuickSellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rootQuickSellLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(rootQuickSellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ammountToSell)
+                    .addComponent(confirmSell, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rootQuickSellLayout.createSequentialGroup()
+                .addContainerGap(140, Short.MAX_VALUE)
+                .addComponent(ammountSelledLabel)
+                .addGap(151, 151, 151))
         );
-        quickSellWindowLayout.setVerticalGroup(
-            quickSellWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        rootQuickSellLayout.setVerticalGroup(
+            rootQuickSellLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rootQuickSellLayout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addComponent(ammountSelledLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ammountToSell, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(confirmSell, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
         );
 
-        javax.swing.GroupLayout quickStockWindowLayout = new javax.swing.GroupLayout(quickStockWindow.getContentPane());
-        quickStockWindow.getContentPane().setLayout(quickStockWindowLayout);
-        quickStockWindowLayout.setHorizontalGroup(
-            quickStockWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        quickSellWindow.getContentPane().add(rootQuickSell);
+
+        quickStockWindow.getContentPane().setLayout(new java.awt.GridLayout());
+
+        rootQuickStock.setBackground(new java.awt.Color(0, 102, 153));
+
+        ammountToStock.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        ammountToStock.setForeground(new java.awt.Color(0, 102, 204));
+        ammountToStock.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        confirmStock.setBackground(new java.awt.Color(255, 255, 255));
+        confirmStock.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                confirmStockMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                confirmStockMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                confirmStockMouseExited(evt);
+            }
+        });
+        confirmStock.setLayout(new java.awt.GridLayout());
+
+        confirmStockTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        confirmStockTxt.setForeground(new java.awt.Color(0, 102, 204));
+        confirmStockTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        confirmStockTxt.setText("Confirm");
+        confirmStock.add(confirmStockTxt);
+
+        ammountStockedLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        ammountStockedLabel.setForeground(new java.awt.Color(255, 255, 255));
+        ammountStockedLabel.setText("Ammount stocked");
+
+        javax.swing.GroupLayout rootQuickStockLayout = new javax.swing.GroupLayout(rootQuickStock);
+        rootQuickStock.setLayout(rootQuickStockLayout);
+        rootQuickStockLayout.setHorizontalGroup(
+            rootQuickStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(rootQuickStockLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(rootQuickStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ammountToStock, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
+                    .addComponent(confirmStock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rootQuickStockLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(ammountStockedLabel)
+                .addGap(131, 131, 131))
         );
-        quickStockWindowLayout.setVerticalGroup(
-            quickStockWindowLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        rootQuickStockLayout.setVerticalGroup(
+            rootQuickStockLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, rootQuickStockLayout.createSequentialGroup()
+                .addContainerGap(51, Short.MAX_VALUE)
+                .addComponent(ammountStockedLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ammountToStock, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(confirmStock, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
         );
+
+        quickStockWindow.getContentPane().add(rootQuickStock);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -371,7 +485,7 @@ public class App extends javax.swing.JFrame {
 
         quickSellTxt.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         quickSellTxt.setForeground(new java.awt.Color(0, 102, 204));
-        quickSellTxt.setText("Quick sell");
+        quickSellTxt.setText("Quick retrieve");
         quickSell.add(quickSellTxt);
 
         manage.setBackground(new java.awt.Color(255, 255, 255));
@@ -447,7 +561,6 @@ public class App extends javax.swing.JFrame {
         itemInfoTxt.setColumns(20);
         itemInfoTxt.setLineWrap(true);
         itemInfoTxt.setRows(5);
-        itemInfoTxt.setText("tgretggfdsfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         itemInfoTxt.setWrapStyleWord(true);
         itemInfoTxt.setFocusable(false);
         itemInfoTxt.setRequestFocusEnabled(false);
@@ -541,7 +654,7 @@ public class App extends javax.swing.JFrame {
 
     private void quickStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickStockMouseClicked
         // TODO add your handling code here:
-        openWindow(quickStockWindow, "Quick stock",300,300);
+        openWindow(quickStockWindow, "Quick stock",500,250);
     }//GEN-LAST:event_quickStockMouseClicked
 
     private void manageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageMouseClicked
@@ -556,7 +669,7 @@ public class App extends javax.swing.JFrame {
 
     private void quickSellMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickSellMouseClicked
         // TODO add your handling code here:
-        openWindow(quickSellWindow,"Quick sell",300,300);
+        openWindow(quickSellWindow,"Quick sell",500,250);
     }//GEN-LAST:event_quickSellMouseClicked
 
     private void itemInfoTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemInfoTxtMouseEntered
@@ -622,6 +735,38 @@ public class App extends javax.swing.JFrame {
         // TODO add your handling code here:
         buttonExitBehaviour(search,searchTxt,WHITE,ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_searchMouseExited
+
+    private void confirmSellMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmSellMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_confirmSellMouseClicked
+
+    private void confirmSellMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmSellMouseEntered
+        // TODO add your handling code here:
+        buttonHoverBehaviour(confirmSell,confirmSellTxt,HOVER_COLOR,WHITE);
+    }//GEN-LAST:event_confirmSellMouseEntered
+
+    private void confirmSellMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmSellMouseExited
+        // TODO add your handling code here:
+        buttonExitBehaviour(confirmSell,confirmSellTxt,WHITE,ORIGINAL_TEXT_COLOR);
+    }//GEN-LAST:event_confirmSellMouseExited
+
+    private void confirmStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmStockMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_confirmStockMouseClicked
+
+    private void confirmStockMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmStockMouseEntered
+        // TODO add your handling code here:
+        buttonHoverBehaviour(confirmStock,confirmStockTxt,HOVER_COLOR,WHITE);
+    }//GEN-LAST:event_confirmStockMouseEntered
+
+    private void confirmStockMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmStockMouseExited
+        // TODO add your handling code here:
+        buttonExitBehaviour(confirmStock,confirmStockTxt,WHITE,ORIGINAL_TEXT_COLOR);
+    }//GEN-LAST:event_confirmStockMouseExited
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     
     
@@ -711,8 +856,16 @@ public class App extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel addItem;
     private javax.swing.JLabel addItemTxt;
+    private javax.swing.JLabel ammountSelledLabel;
+    private javax.swing.JLabel ammountStockedLabel;
+    private javax.swing.JTextField ammountToSell;
+    private javax.swing.JTextField ammountToStock;
     private javax.swing.JPanel buttonsPane;
     private javax.swing.JPanel buttonsPane1;
+    private javax.swing.JPanel confirmSell;
+    private javax.swing.JLabel confirmSellTxt;
+    private javax.swing.JPanel confirmStock;
+    private javax.swing.JLabel confirmStockTxt;
     private javax.swing.JPanel deleteItem;
     private javax.swing.JLabel deleteItemTxt;
     private javax.swing.JPanel editItem;
@@ -743,6 +896,8 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel quickStockTxt;
     private javax.swing.JFrame quickStockWindow;
     private javax.swing.JPanel root;
+    private javax.swing.JPanel rootQuickSell;
+    private javax.swing.JPanel rootQuickStock;
     private javax.swing.JPanel search;
     private javax.swing.JTextField searchBar;
     private javax.swing.JPanel searchButton;
