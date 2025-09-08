@@ -17,10 +17,10 @@ import java.util.Set;
  *
  * @author XD
  */
+
 public class App extends javax.swing.JFrame {
 
     private final Color WHITE = new Color(255, 255, 255);
-    private final Color RED = new Color(255, 0, 0);
     private final Color HOVER_COLOR = new Color(99, 190, 255);
     private final Color ORIGINAL_TEXT_COLOR = new Color(0, 102, 204);
     private final Cursor HAND = new Cursor(Cursor.HAND_CURSOR);
