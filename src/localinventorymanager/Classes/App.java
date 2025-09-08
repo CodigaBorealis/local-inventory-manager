@@ -4,9 +4,15 @@
  */
 package localinventorymanager.Classes;
 
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import javax.swing.*;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -17,7 +23,6 @@ import java.util.Set;
  *
  * @author XD
  */
-
 public class App extends javax.swing.JFrame {
 
     private final Color WHITE = new Color(255, 255, 255);
@@ -29,7 +34,7 @@ public class App extends javax.swing.JFrame {
     private DefaultListModel<String> listModel = new DefaultListModel<>();
     private Map<Integer, Item> inventory = new HashMap<>();//key=name of the item; value=the object itself
     private final Set<JFrame> closedWindows = new HashSet<>();
-    
+    File inventoryJson = new File("storage/inventory.json");
 //TODO TODO TODO TODO:
     //SAVE AND LOAD INFO FROM A JSON FILE
 
@@ -42,6 +47,7 @@ public class App extends javax.swing.JFrame {
         initComponents();
         products.setModel(listModel);
         inventoryList.setModel(listModel);
+        loadInventory(inventoryJson);
     }
 
     /**
@@ -941,7 +947,6 @@ public class App extends javax.swing.JFrame {
     private void deleteItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteItemMouseClicked
         // TODO add your handling code here:
         deleteItem(inventoryList.getSelectedValue());
-
     }//GEN-LAST:event_deleteItemMouseClicked
 
     private void deleteItemMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteItemMouseEntered
@@ -1198,7 +1203,8 @@ public class App extends javax.swing.JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 int result = JOptionPane.showConfirmDialog(window, "Do you really want to close this window?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
-            }
+            if(result==0){
+            window.dispose();}}
 
         });
     }
@@ -1312,6 +1318,7 @@ public class App extends javax.swing.JFrame {
         id++;
         boolean availability = Integer.parseInt(stock.getText()) > 0;
         inventory.put(id, createItem(nameField, stockField, priceField, description, category, supplier, stockbound, availability));
+        saveInventory(inventoryJson);
     }
 
     private void updateProducts() {
@@ -1364,8 +1371,10 @@ public class App extends javax.swing.JFrame {
             int x = JOptionPane.showConfirmDialog(manageWindow, "Are you sure you want to delete this item?", "Confirm deletion", JOptionPane.YES_NO_OPTION);
             if (x == 0) {
                 inventory.remove(itemId);
+                saveInventory(inventoryJson);
                 updateProducts();
                 clearInfo();
+
             }
         } else {
             showError("Nothing selected");
@@ -1453,6 +1462,7 @@ public class App extends javax.swing.JFrame {
                 item.setSupplier(supplier1.getText());
                 modified = true;
             }
+            saveInventory(inventoryJson);
         }
 
         return modified;
@@ -1464,6 +1474,7 @@ public class App extends javax.swing.JFrame {
         if (amount <= available) {
             inventory.get(itemId).setStock(available - amount);
             showInfo("The new stock for " + inventory.get(itemId).getName() + " is now " + inventory.get(itemId).getStock());
+            saveInventory(inventoryJson);
 
         } else if (available == 0) {
             showWarning("There is no more stock left for " + inventory.get(itemId).getName());
@@ -1499,10 +1510,12 @@ public class App extends javax.swing.JFrame {
         int itemId = extractId(selection);
         int currentStock = inventory.get(itemId).getStock();
         inventory.get(itemId).setStock(currentStock + Integer.parseInt(amount));
+
         if (inventory.get(itemId).getStatus() == false) {
             inventory.get(itemId).setStatus(true);
 
         }
+        saveInventory(inventoryJson);
         showInfo("The new stock for " + inventory.get(itemId).getName() + " is now " + inventory.get(itemId).getStock());
 
     }
@@ -1618,6 +1631,37 @@ public class App extends javax.swing.JFrame {
         }
 
         return true;
+    }
+
+    private void saveInventory(File inventoryJson) {
+        Gson gson = new Gson();
+
+        try (FileWriter writer = new FileWriter(inventoryJson)) {
+            gson.toJson(this.inventory, writer);
+            writer.flush();
+            System.out.println("Inventory saved.");
+        } catch (IOException e) {
+            e.printStackTrace();
+            showError("Failed to save inventory.");
+        }
+    }
+
+    private void loadInventory(File inventoryJson) {
+        Gson parser = new Gson();
+        try (FileReader reader = new FileReader(inventoryJson)) {
+            java.lang.reflect.Type type = new TypeToken<HashMap<Integer, Item>>() {
+            }.getType();
+            HashMap<Integer, Item> loadedInventory = parser.fromJson(reader, type);
+            if (loadedInventory != null) {
+                this.inventory = loadedInventory;
+                updateProducts();
+                System.out.println("Inventory loaded successfully.");
+            } else {
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFrame addInventory;
