@@ -33,7 +33,7 @@ public class App extends javax.swing.JFrame {
     private final Set<JFrame> closedWindows = new HashSet<>();
 //TODO TODO TODO TODO:
     //SAVE AND LOAD INFO FROM A JSON FILE
-    //FIX THE CREATION OF ITEMS
+    //SEARCH BAR
 
     /**
      * Creates new form App
@@ -449,7 +449,7 @@ public class App extends javax.swing.JFrame {
         priceLabel.setText("Price");
 
         stockBoundLabel.setForeground(new java.awt.Color(255, 255, 255));
-        stockBoundLabel.setText("StockBound");
+        stockBoundLabel.setText("Minimum stock");
 
         supplierLabel.setForeground(new java.awt.Color(255, 255, 255));
         supplierLabel.setText("Supplier");
@@ -588,7 +588,7 @@ public class App extends javax.swing.JFrame {
         priceLabel1.setText("Price");
 
         stockBoundLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        stockBoundLabel1.setText("StockBound");
+        stockBoundLabel1.setText("Minimum stock");
 
         supplierLabel1.setForeground(new java.awt.Color(255, 255, 255));
         supplierLabel1.setText("Supplier");
@@ -714,6 +714,9 @@ public class App extends javax.swing.JFrame {
 
         searchButton.setBackground(new java.awt.Color(255, 255, 255));
         searchButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                searchButtonMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 searchButtonMouseEntered(evt);
             }
@@ -992,6 +995,12 @@ public class App extends javax.swing.JFrame {
 
     private void searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseClicked
         // TODO add your handling code here:
+                if(inventoryList.getModel().getSize()>0){
+            
+            
+            
+        }else{
+        showError("The inventory is empty");}
     }//GEN-LAST:event_searchMouseClicked
 
     private void searchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseExited
@@ -1077,6 +1086,16 @@ public class App extends javax.swing.JFrame {
         // TODO add your handling code here:
         buttonExitBehaviour(editProduct, editProductTxt, WHITE, ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_editProductMouseExited
+
+    private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
+        // TODO add your handling code here:
+        if(products.getModel().getSize()>0){
+            
+            
+            
+        }else{
+        showError("The inventory is empty");}
+    }//GEN-LAST:event_searchButtonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1465,6 +1484,10 @@ public class App extends javax.swing.JFrame {
     
     private void displayInfo(String selection) {
         int itemId = extractId(selection);
+        if(inventory.get(itemId).getStockBound()>=inventory.get(itemId).getStock()){
+        showWarning("Stock for "+inventory.get(itemId).getName()+" is low");
+        
+        }
         itemInfoTxt.setText(inventory.get(itemId).toString());
     }
     

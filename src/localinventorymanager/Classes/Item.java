@@ -43,10 +43,10 @@ public class Item {
     @Override
     public String toString() {
         if(this.status){
-        return "name: " + name +"\n"+ "description: " + description +"\n"+ "category: " + category +"\n"+ "stock: " + stock +"\n"+"price: " + price +"\n"+"id: " + id +"\n"+"status: Available"+"\n"+"stockBound: " + stockBound +"\n"+ "supplier: " + supplier;
+        return "name: " + name +"\n"+ "description: " + description +"\n"+ "category: " + category +"\n"+ "stock: " + stock +"\n"+"price: " + price +"\n"+"id: " + id +"\n"+"status: Available"+"\n"+"minimum stock: " + stockBound +"\n"+ "supplier: " + supplier;
     }else{
         
-        return "name: " + name +"\n"+ "description: " + description +"\n"+ "category: " + category +"\n"+ "stock: " + stock +"\n"+"price: " + price +"\n"+"id: " + id +"\n"+"status: Unavailable" +"\n"+"stockBound: " + stockBound +"\n"+ "supplier: " + supplier;
+        return "name: " + name +"\n"+ "description: " + description +"\n"+ "category: " + category +"\n"+ "stock: " + stock +"\n"+"price: " + price +"\n"+"id: " + id +"\n"+"status: Unavailable" +"\n"+"minimum stock: " + stockBound +"\n"+ "supplier: " + supplier;
         
         }}
 
