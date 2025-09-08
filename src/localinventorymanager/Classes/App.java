@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collections;
 import javax.swing.*;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -30,7 +31,7 @@ public class App extends javax.swing.JFrame {
     private final Color ORIGINAL_TEXT_COLOR = new Color(0, 102, 204);
     private final Cursor HAND = new Cursor(Cursor.HAND_CURSOR);
     private final Cursor NORMAL = new Cursor(Cursor.DEFAULT_CURSOR);
-    private int id = 0;
+    private int id;
     private DefaultListModel<String> listModel = new DefaultListModel<>();
     private Map<Integer, Item> inventory = new HashMap<>();//key=name of the item; value=the object itself
     private final Set<JFrame> closedWindows = new HashSet<>();
@@ -48,6 +49,7 @@ public class App extends javax.swing.JFrame {
         products.setModel(listModel);
         inventoryList.setModel(listModel);
         loadInventory(inventoryJson);
+        id = getLastId();
     }
 
     /**
@@ -1203,8 +1205,10 @@ public class App extends javax.swing.JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 int result = JOptionPane.showConfirmDialog(window, "Do you really want to close this window?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
-            if(result==0){
-            window.dispose();}}
+                if (result == 0) {
+                    window.dispose();
+                }
+            }
 
         });
     }
@@ -1639,7 +1643,6 @@ public class App extends javax.swing.JFrame {
         try (FileWriter writer = new FileWriter(inventoryJson)) {
             gson.toJson(this.inventory, writer);
             writer.flush();
-            System.out.println("Inventory saved.");
         } catch (IOException e) {
             e.printStackTrace();
             showError("Failed to save inventory.");
@@ -1655,13 +1658,21 @@ public class App extends javax.swing.JFrame {
             if (loadedInventory != null) {
                 this.inventory = loadedInventory;
                 updateProducts();
-                System.out.println("Inventory loaded successfully.");
             } else {
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private int getLastId() {
+        int lastId = 1;
+        if (!inventory.isEmpty()) {
+            int highestId = Collections.max(inventory.keySet());
+            lastId = highestId;
+        }
+        return lastId;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFrame addInventory;
