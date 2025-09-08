@@ -18,7 +18,7 @@ import java.util.Set;
  * @author XD
  */
 public class App extends javax.swing.JFrame {
-
+    
     private final Color WHITE = new Color(255, 255, 255);
     private final Color RED = new Color(255, 0, 0);
     private final Color HOVER_COLOR = new Color(99, 190, 255);
@@ -899,6 +899,7 @@ public class App extends javax.swing.JFrame {
 
     private void productsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productsMouseClicked
         // TODO add your handling code here:
+        displayInfo(products.getSelectedValue());
 
     }//GEN-LAST:event_productsMouseClicked
 
@@ -1132,7 +1133,7 @@ public class App extends javax.swing.JFrame {
      * @param textColor The text color when the cursor exits.
      */
     private void buttonExitBehaviour(JPanel button, JLabel text, Color backgroundColor, Color textColor) {
-
+        
         button.setBackground(backgroundColor);
         text.setForeground(textColor);
     }
@@ -1176,13 +1177,13 @@ public class App extends javax.swing.JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 int result = JOptionPane.showConfirmDialog(window, "Do you really want to close this window?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
-
+                
                 if (result == JOptionPane.YES_OPTION) {
                     openWindows--;
                     window.dispose();
                 }
             }
-
+            
         });
     }
 
@@ -1199,10 +1200,10 @@ public class App extends javax.swing.JFrame {
         try {
             Float.valueOf(number.trim());
             return true;
-
+            
         } catch (NumberFormatException e) {
             return false;
-
+            
         }
     }
 
@@ -1220,7 +1221,7 @@ public class App extends javax.swing.JFrame {
             }
         } catch (NumberFormatException e) {
             return false;
-
+            
         }
         return false;
     }
@@ -1238,22 +1239,22 @@ public class App extends javax.swing.JFrame {
             showError("The product must have a name");
             return false;
         }
-
+        
         if (stock.trim().isEmpty()) {
             showError("The item must have a stock quantity");
             return false;
         }
-
+        
         if (!isInt(stock)) {
             showError("The stock must be an integer");
             return false;
         }
-
+        
         if (price.trim().isEmpty()) {
             showError("The item must have a price");
             return false;
         }
-
+        
         if (!isFloat(price)) {
             showError("The price must be a decimal number");
             return false;
@@ -1269,22 +1270,22 @@ public class App extends javax.swing.JFrame {
      */
     private void showMessage(String message, String title, int messageType) {
         JOptionPane.showMessageDialog(null, message, title, messageType);
-
+        
     }
-
+    
     private void showError(String message) {
         showMessage(message, "Error", JOptionPane.ERROR_MESSAGE);
-
+        
     }
-
+    
     private void showWarning(String message) {
         showMessage(message, "Warning", JOptionPane.WARNING_MESSAGE);
-
+        
     }
-
+    
     private void showInfo(String message) {
         showMessage(message, "Info", JOptionPane.INFORMATION_MESSAGE);
-
+        
     }
 
     /**
@@ -1299,24 +1300,25 @@ public class App extends javax.swing.JFrame {
         boolean availability = Integer.parseInt(stock.getText()) > 0;
         inventory.put(id, new Item.Builder(id, nameField, Float.parseFloat(priceField), availability).stock(Integer.parseInt(stockField)).build());
     }
-
+    
     private void updateProducts() {
         listModel.clear();
         for (Item product : inventory.values()) {
             listModel.addElement(product.getName() + " ID: " + product.getId());
+            clearInfo();
         }
-
+        
     }
-
+    
     private void closeAfterOperation(Component component) {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(component);
         if (frame != null) {
             frame.dispose();
-
+            
         }
-
+        
     }
-
+    
     private void addCleanup() {
         name.setText("");
         description.setText("");
@@ -1327,9 +1329,9 @@ public class App extends javax.swing.JFrame {
         supplier.setText("");
         addProduct.setBackground(WHITE);
         addProductTxt.setForeground(ORIGINAL_TEXT_COLOR);
-
+        
     }
-
+    
     private void updateCleanup() {
         name1.setText("");
         description1.setText("");
@@ -1340,31 +1342,33 @@ public class App extends javax.swing.JFrame {
         supplier1.setText("");
         editProduct.setBackground(WHITE);
         editProductTxt.setForeground(ORIGINAL_TEXT_COLOR);
-
+        
     }
-
+    
     private void deleteItem(String item) {
         int itemId = extractId(item);
         if (itemId > -1) {
             inventory.remove(itemId);
             updateProducts();
+            clearInfo();
         } else {
             showError("Nothing selected");
         }
     }
-
+    
     private void edit(String item) {
         int itemId = extractId(item);
         if (itemId > -1) {
             modifyItem(inventory.get(itemId));
             updateProducts();
+            clearInfo();
             closeAfterOperation(editProduct);
         } else {
             showError("Nothing selected");
         }
-
+        
     }
-
+    
     private int extractId(String item) {
         if (item != null && !item.isEmpty()) {
             final String breakpoint = " ID: ";
@@ -1374,46 +1378,46 @@ public class App extends javax.swing.JFrame {
         } else {
             return -1;
         }
-
+        
     }
-
+    
     private void modifyItem(Item item) {
         if (!name1.getText().trim().isEmpty()) {
             item.setName(name1.getText());
         }
-
+        
         if (!description1.getText().trim().isEmpty()) {
             item.setDescription(description1.getText());
         }
-
+        
         if (!category1.getText().trim().isEmpty()) {
             item.setCategory(category1.getText());
         }
-
+        
         if (!stock1.getText().trim().isEmpty() && isInt(stock1.getText())) {
             item.setStock(Integer.parseInt(stock1.getText()));
         }
-
+        
         if (!price1.getText().trim().isEmpty() && isFloat(price1.getText())) {
             item.setPrice(Float.parseFloat(price1.getText()));
         }
-
+        
         if (!stockBound1.getText().trim().isEmpty() && isInt(stockBound1.getText())) {
             item.setStockBound(Integer.parseInt(stockBound1.getText()));
         }
-
+        
         if (!supplier1.getText().trim().isEmpty()) {
             item.setSupplier(supplier1.getText());
         }
     }
-
+    
     private boolean retrieve(String item, int amount) {
         int itemId = extractId(item);
         int available = inventory.get(itemId).getStock();
         if (amount <= available) {
             inventory.get(itemId).setStock(available - amount);
             showInfo("The new stock for " + inventory.get(itemId).getName() + " is now " + inventory.get(itemId).getStock());
-
+            
         } else if (available == 0) {
             showWarning("There is no more stock left for " + inventory.get(itemId).getName());
             inventory.get(itemId).setStatus(false);
@@ -1421,11 +1425,11 @@ public class App extends javax.swing.JFrame {
         } else {
             showError("There are only " + inventory.get(itemId).getStock() + " " + inventory.get(itemId).getName() + " in stock");
             return false;
-
+            
         }
         return true;
     }
-
+    
     private boolean validateQuickAction(String selection, String ammount) {
         if (selection == null) {
             showError("Nothing selected");
@@ -1434,26 +1438,35 @@ public class App extends javax.swing.JFrame {
         if (!isInt(ammount)) {
             showError("The amount must be an integer bigger than 0");
             return false;
-
+            
         }
         if (ammount.trim().isEmpty()) {
             showError("You must introduce an amount");
             return false;
         }
-
+        clearInfo();
         return true;
     }
-
+    
     private void stock(String selection, String amount) {
         int itemId = extractId(selection);
         int currentStock = inventory.get(itemId).getStock();
         inventory.get(itemId).setStock(currentStock + Integer.parseInt(amount));
         if (inventory.get(itemId).getStatus() == false) {
             inventory.get(itemId).setStatus(true);
-
+            
         }
         showInfo("The new stock for " + inventory.get(itemId).getName() + " is now " + inventory.get(itemId).getStock());
+        
+    }
 
+    private void displayInfo(String selection) {
+        int itemId = extractId(selection);
+        itemInfoTxt.setText(inventory.get(itemId).toString());
+    }
+
+    private void clearInfo() {
+        itemInfoTxt.setText("");
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFrame addInventory;
