@@ -31,6 +31,9 @@ public class App extends javax.swing.JFrame {
     private DefaultListModel<String> listModel = new DefaultListModel<>();
     private Map<Integer, Item> inventory = new HashMap<>();//key=name of the item; value=the object itself
     private final Set<JFrame> closedWindows = new HashSet<>();
+//TODO TODO TODO TODO:
+    //SAVE AND LOAD INFO FROM A JSON FILE
+    //FIX THE CREATION OF ITEMS
 
     /**
      * Creates new form App
@@ -1042,7 +1045,7 @@ public class App extends javax.swing.JFrame {
     private void addProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductMouseClicked
         // TODO add your handling code here:
         if (validItem(name.getText(), stock.getText(), price.getText())) {
-            addItem(name.getText(), stock.getText(), price.getText());
+            addItem(name.getText(), stock.getText(), price.getText(),description.getText(),category.getText(),supplier.getText(),stockBound.getText());//description category supplier stockbound
             updateProducts();
             closeAfterOperation(addProduct);
             addCleanup();
@@ -1295,10 +1298,10 @@ public class App extends javax.swing.JFrame {
      * @param stockField the ammount of the item.
      * @param priceField the price of the item.
      */
-    private void addItem(String nameField, String stockField, String priceField) {
+    private void addItem(String nameField, String stockField, String priceField, String description, String category, String supplier, String stockbound) {
         id++;
         boolean availability = Integer.parseInt(stock.getText()) > 0;
-        inventory.put(id, new Item.Builder(id, nameField, Float.parseFloat(priceField), availability).stock(Integer.parseInt(stockField)).build());
+        inventory.put(id, createItem(nameField, stockField, priceField, description, category, supplier, stockbound, availability));
     }
     
     private void updateProducts() {
@@ -1459,14 +1462,43 @@ public class App extends javax.swing.JFrame {
         showInfo("The new stock for " + inventory.get(itemId).getName() + " is now " + inventory.get(itemId).getStock());
         
     }
-
+    
     private void displayInfo(String selection) {
         int itemId = extractId(selection);
         itemInfoTxt.setText(inventory.get(itemId).toString());
     }
-
+    
     private void clearInfo() {
         itemInfoTxt.setText("");
+    }
+    
+    private Item createItem(String nameField, String stockField, String priceField, String description, String category, String supplier, String stockbound, boolean availability) {
+        Item item = new Item.Builder(id, nameField, Float.parseFloat(priceField), availability).stock(Integer.parseInt(stockField)).build();
+        if (!description.trim().isEmpty()) {
+            
+            item.setDescription(description);
+        } else {
+            item.setDescription("No description");
+        }
+        if (!category.trim().isEmpty()) {
+            item.setCategory(category);
+        } else {
+            item.setCategory("Other");
+        }
+        if (!supplier.trim().isEmpty()) {
+            item.setSupplier(supplier);
+            
+        } else {
+            item.setSupplier("Unknown");
+        }
+        if (!stockbound.trim().isEmpty() && isInt(stockbound)) {
+            item.setStockBound(Integer.parseInt(stockbound));
+        } else {
+            item.setStockBound(1);
+        }
+        
+        return item;
+        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFrame addInventory;

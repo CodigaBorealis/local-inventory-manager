@@ -42,8 +42,13 @@ public class Item {
 
     @Override
     public String toString() {
-        return "name: " + name +"\n "+ "description: " + description +"\n"+ "category: " + category +"\n"+ "stock: " + stock +"\n"+"price: " + price +"\n"+"id: " + id +"\n"+"status: " + status +"\n"+"stockBound: " + stockBound +"\n"+ "supplier:" + supplier;
-    }
+        if(this.status){
+        return "name: " + name +"\n"+ "description: " + description +"\n"+ "category: " + category +"\n"+ "stock: " + stock +"\n"+"price: " + price +"\n"+"id: " + id +"\n"+"status: Available"+"\n"+"stockBound: " + stockBound +"\n"+ "supplier: " + supplier;
+    }else{
+        
+        return "name: " + name +"\n"+ "description: " + description +"\n"+ "category: " + category +"\n"+ "stock: " + stock +"\n"+"price: " + price +"\n"+"id: " + id +"\n"+"status: Unavailable" +"\n"+"stockBound: " + stockBound +"\n"+ "supplier: " + supplier;
+        
+        }}
 
     public String getName() {
         return name;
@@ -133,11 +138,11 @@ public class Item {
         private String name;
         private float price;
         private boolean status;
+        private int stock;
         
         //optionals
         private String description=null;
         private String category=null;
-        private int stock=0;
         private String imagePath=null;
         private int stockBound=0;
         private String supplier=null;
