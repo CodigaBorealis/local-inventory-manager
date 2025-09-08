@@ -29,9 +29,6 @@ public class Item {
     private String imagePath;
     private int stockBound;
     private String supplier;
-    private Employee lastMod;
-    private LocalDateTime lastModTime;
-    
     private Item(Builder builder){
         this.name=builder.name;
         this.description=builder.description;
