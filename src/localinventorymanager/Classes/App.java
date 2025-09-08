@@ -29,6 +29,7 @@ public class App extends javax.swing.JFrame {
     private DefaultListModel<String> listModel = new DefaultListModel<>();
     private Map<Integer, Item> inventory = new HashMap<>();//key=name of the item; value=the object itself
     private final Set<JFrame> closedWindows = new HashSet<>();
+    
 //TODO TODO TODO TODO:
     //SAVE AND LOAD INFO FROM A JSON FILE
 
