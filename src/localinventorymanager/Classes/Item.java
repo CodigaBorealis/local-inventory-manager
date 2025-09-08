@@ -3,9 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package localinventorymanager.Classes;
-
-import java.time.LocalDateTime;
-
 /**
  * Represents an item in the inventory.
  * Instances should be created using the{@link Builder}.

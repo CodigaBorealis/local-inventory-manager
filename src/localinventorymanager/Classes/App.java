@@ -113,7 +113,7 @@ public class App extends javax.swing.JFrame {
         supplier1 = new javax.swing.JTextField();
         nameLabel1 = new javax.swing.JLabel();
         editProduct = new javax.swing.JPanel();
-        addProductTxt1 = new javax.swing.JLabel();
+        editProductTxt = new javax.swing.JLabel();
         descriptionLabel1 = new javax.swing.JLabel();
         categoryLabel1 = new javax.swing.JLabel();
         stockLabel1 = new javax.swing.JLabel();
@@ -571,11 +571,11 @@ public class App extends javax.swing.JFrame {
         });
         editProduct.setLayout(new java.awt.GridLayout(1, 0));
 
-        addProductTxt1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        addProductTxt1.setForeground(new java.awt.Color(0, 102, 204));
-        addProductTxt1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        addProductTxt1.setText("Edit product");
-        editProduct.add(addProductTxt1);
+        editProductTxt.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        editProductTxt.setForeground(new java.awt.Color(0, 102, 204));
+        editProductTxt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        editProductTxt.setText("Edit product");
+        editProduct.add(editProductTxt);
 
         descriptionLabel1.setForeground(new java.awt.Color(255, 255, 255));
         descriptionLabel1.setText("Description");
@@ -945,7 +945,12 @@ public class App extends javax.swing.JFrame {
 
     private void editItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editItemMouseClicked
         // TODO add your handling code here:
-        openWindow(editInventory, "Edit item", 500, 500);
+        if (inventoryList.getSelectedValue() != null) {
+            openWindow(editInventory, "Edit item", 500, 500);
+        } else {
+            showError("Nothing selected");
+        }
+
     }//GEN-LAST:event_editItemMouseClicked
 
     private void editItemMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editItemMouseEntered
@@ -1041,14 +1046,17 @@ public class App extends javax.swing.JFrame {
 
     private void editProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductMouseClicked
         // TODO add your handling code here:
+        edit(inventoryList.getSelectedValue());
     }//GEN-LAST:event_editProductMouseClicked
 
     private void editProductMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductMouseEntered
         // TODO add your handling code here:
+        buttonHoverBehaviour(editProduct, editProductTxt, HOVER_COLOR, WHITE);
     }//GEN-LAST:event_editProductMouseEntered
 
     private void editProductMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductMouseExited
         // TODO add your handling code here:
+        buttonExitBehaviour(editProduct, editProductTxt, WHITE, ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_editProductMouseExited
 
     /**
@@ -1314,17 +1322,68 @@ public class App extends javax.swing.JFrame {
     }
 
     private void deleteItem(String item) {
-        if (item != null && !item.isEmpty()) {
-            final String breakpoint = " ID: ";
-            int index = item.lastIndexOf(breakpoint);
-            String itemId = item.substring(index + breakpoint.length()).trim();
-            inventory.remove(Integer.valueOf(itemId));
+        int itemId = extractId(item);
+        if (itemId > -1) {
+            inventory.remove(itemId);
             updateProducts();
+        } else {
+            showError("Nothing selected");
+        }
+    }
+
+    private void edit(String item) {
+        int itemId = extractId(item);
+        if (itemId > -1) {
+            modifyItem(inventory.get(itemId));
+            updateProducts();
+            closeAfterOperation(editProduct);
         } else {
             showError("Nothing selected");
         }
 
     }
+
+    private int extractId(String item) {
+        if (item != null && !item.isEmpty()) {
+            final String breakpoint = " ID: ";
+            int index = item.lastIndexOf(breakpoint);
+            String itemId = item.substring(index + breakpoint.length()).trim();
+            return Integer.parseInt(itemId);
+        } else {
+            return -1;
+        }
+
+    }
+
+private void modifyItem(Item item) {
+    if (!name1.getText().trim().isEmpty()) {
+        item.setName(name1.getText());
+    }
+
+    if (!description1.getText().trim().isEmpty()) {
+        item.setDescription(description1.getText());
+    }
+
+    if (!category1.getText().trim().isEmpty()) {
+        item.setCategory(category1.getText());
+    }
+
+    if (!stock1.getText().trim().isEmpty() && isInt(stock1.getText())) {
+        item.setStock(Integer.parseInt(stock1.getText()));
+    }
+
+    if (!price1.getText().trim().isEmpty() && isFloat(price1.getText())) {
+        item.setPrice(Float.parseFloat(price1.getText()));
+    }
+
+    if (!stockBound1.getText().trim().isEmpty() && isInt(stockBound1.getText())) {
+        item.setStockBound(Integer.parseInt(stockBound1.getText()));
+    }
+
+    if (!supplier1.getText().trim().isEmpty()) {
+        item.setSupplier(supplier1.getText());
+    }
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFrame addInventory;
@@ -1334,7 +1393,6 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel addItemTxt;
     private javax.swing.JPanel addProduct;
     private javax.swing.JLabel addProductTxt;
-    private javax.swing.JLabel addProductTxt1;
     private javax.swing.JLabel ammountSelledLabel;
     private javax.swing.JLabel ammountStockedLabel;
     private javax.swing.JTextField ammountToSell;
@@ -1359,6 +1417,7 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JPanel editItem;
     private javax.swing.JLabel editItemTxt;
     private javax.swing.JPanel editProduct;
+    private javax.swing.JLabel editProductTxt;
     private javax.swing.JList<String> inventoryList;
     private javax.swing.JScrollPane itemInfoPane;
     private javax.swing.JTextArea itemInfoTxt;
