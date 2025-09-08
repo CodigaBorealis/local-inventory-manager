@@ -25,7 +25,6 @@ public class App extends javax.swing.JFrame {
     private final Color ORIGINAL_TEXT_COLOR = new Color(0, 102, 204);
     private final Cursor HAND = new Cursor(Cursor.HAND_CURSOR);
     private final Cursor NORMAL = new Cursor(Cursor.DEFAULT_CURSOR);
-    private int openWindows = 1;
     private int id = 0;
     private DefaultListModel<String> listModel = new DefaultListModel<>();
     private Map<Integer, Item> inventory = new HashMap<>();//key=name of the item; value=the object itself
@@ -1172,17 +1171,13 @@ public class App extends javax.swing.JFrame {
      * @param width The JFrame width.
      */
     private void openWindow(JFrame window, String title, int height, int width) {
-        //    if(openWindows<MAX_WINDOWS){
 
         window.setSize(width, height);
         window.setLocationRelativeTo(null);
         window.setResizable(false);
         window.setTitle(title);
         overrideWindowClose(window);
-        openWindows++;
         window.setVisible(true);//}else{
-        //  JOptionPane.showMessageDialog(null,"You have an operation in process");
-        // }
 
     }
 
@@ -1202,11 +1197,6 @@ public class App extends javax.swing.JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 int result = JOptionPane.showConfirmDialog(window, "Do you really want to close this window?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
-
-                if (result == JOptionPane.YES_OPTION) {
-                    openWindows--;
-                    window.dispose();
-                }
             }
 
         });
