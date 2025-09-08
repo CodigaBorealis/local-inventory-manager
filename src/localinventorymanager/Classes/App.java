@@ -18,14 +18,13 @@ import java.util.Set;
  * @author XD
  */
 public class App extends javax.swing.JFrame {
-    
+
     private final Color WHITE = new Color(255, 255, 255);
     private final Color RED = new Color(255, 0, 0);
     private final Color HOVER_COLOR = new Color(99, 190, 255);
     private final Color ORIGINAL_TEXT_COLOR = new Color(0, 102, 204);
     private final Cursor HAND = new Cursor(Cursor.HAND_CURSOR);
     private final Cursor NORMAL = new Cursor(Cursor.DEFAULT_CURSOR);
-    private final int MAX_WINDOWS = 2;
     private int openWindows = 1;
     private int id = 0;
     private DefaultListModel<String> listModel = new DefaultListModel<>();
@@ -33,7 +32,6 @@ public class App extends javax.swing.JFrame {
     private final Set<JFrame> closedWindows = new HashSet<>();
 //TODO TODO TODO TODO:
     //SAVE AND LOAD INFO FROM A JSON FILE
-    //SEARCH BAR
 
     /**
      * Creates new form App
@@ -43,6 +41,7 @@ public class App extends javax.swing.JFrame {
 
         initComponents();
         products.setModel(listModel);
+        inventoryList.setModel(listModel);
     }
 
     /**
@@ -58,7 +57,7 @@ public class App extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         inventoryList = new javax.swing.JList<>();
-        jTextField1 = new javax.swing.JTextField();
+        searchBar1 = new javax.swing.JTextField();
         buttonsPane1 = new javax.swing.JPanel();
         deleteItem = new javax.swing.JPanel();
         deleteItemTxt = new javax.swing.JLabel();
@@ -68,6 +67,8 @@ public class App extends javax.swing.JFrame {
         addItemTxt = new javax.swing.JLabel();
         search = new javax.swing.JPanel();
         searchTxt = new javax.swing.JLabel();
+        itemInfoPane1 = new javax.swing.JScrollPane();
+        itemInfoTxt1 = new javax.swing.JTextArea();
         quickSellWindow = new javax.swing.JFrame();
         rootQuickSell = new javax.swing.JPanel();
         ammountToSell = new javax.swing.JTextField();
@@ -140,13 +141,12 @@ public class App extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(0, 102, 153));
 
         inventoryList.setBorder(null);
-        jScrollPane2.setViewportView(inventoryList);
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+        inventoryList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                inventoryListMouseClicked(evt);
             }
         });
+        jScrollPane2.setViewportView(inventoryList);
 
         buttonsPane1.setBackground(new java.awt.Color(0, 102, 153));
         buttonsPane1.setForeground(new java.awt.Color(102, 255, 102));
@@ -251,6 +251,24 @@ public class App extends javax.swing.JFrame {
         searchTxt.setText("Search");
         search.add(searchTxt);
 
+        itemInfoPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        itemInfoPane1.setToolTipText("");
+        itemInfoPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+        itemInfoTxt1.setColumns(20);
+        itemInfoTxt1.setLineWrap(true);
+        itemInfoTxt1.setRows(5);
+        itemInfoTxt1.setWrapStyleWord(true);
+        itemInfoTxt1.setBorder(null);
+        itemInfoTxt1.setFocusable(false);
+        itemInfoTxt1.setRequestFocusEnabled(false);
+        itemInfoTxt1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                itemInfoTxt1MouseEntered(evt);
+            }
+        });
+        itemInfoPane1.setViewportView(itemInfoTxt1);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -258,23 +276,27 @@ public class App extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jScrollPane2)
-                    .addComponent(buttonsPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(search, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(itemInfoPane1)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jScrollPane2)
+                        .addComponent(buttonsPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addComponent(searchBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(search, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap(19, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1)
+                    .addComponent(searchBar1)
                     .addComponent(search, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(16, 16, 16)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 392, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(itemInfoPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(buttonsPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -699,15 +721,9 @@ public class App extends javax.swing.JFrame {
 
         mainContent.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 124, 498, 209));
 
-        searchBar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                searchBarMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                searchBarMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                searchBarMouseExited(evt);
+        searchBar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchBarKeyReleased(evt);
             }
         });
         mainContent.add(searchBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 351, 353, 20));
@@ -848,21 +864,6 @@ public class App extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void searchBarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchBarMouseEntered
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_searchBarMouseEntered
-
-    private void searchBarMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchBarMouseExited
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_searchBarMouseExited
-
-    private void searchBarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchBarMouseClicked
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_searchBarMouseClicked
-
     private void searchButtonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseEntered
         // TODO add your handling code here:
         buttonHoverBehaviour(searchButton, searchButtonTxt, HOVER_COLOR, WHITE);
@@ -905,8 +906,8 @@ public class App extends javax.swing.JFrame {
 
     private void productsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productsMouseClicked
         // TODO add your handling code here:
-        displayInfo(products.getSelectedValue());
-
+        displayInfo(products.getSelectedValue(), products, itemInfoTxt);
+        showLowStockWarning(products.getSelectedValue(), products);
     }//GEN-LAST:event_productsMouseClicked
 
     private void quickStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickStockMouseClicked
@@ -920,7 +921,7 @@ public class App extends javax.swing.JFrame {
 
     private void manageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageMouseClicked
         // TODO add your handling code here:
-        openWindow(manageWindow, "Manage", 450, 450);
+        openWindow(manageWindow, "Manage", 550, 450);
     }//GEN-LAST:event_manageMouseClicked
 
     private void quickSellMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickSellMouseClicked
@@ -995,12 +996,7 @@ public class App extends javax.swing.JFrame {
 
     private void searchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseClicked
         // TODO add your handling code here:
-                if(inventoryList.getModel().getSize()>0){
-            
-            
-            
-        }else{
-        showError("The inventory is empty");}
+        search(searchBar1, inventoryList, itemInfoTxt1);
     }//GEN-LAST:event_searchMouseClicked
 
     private void searchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchMouseExited
@@ -1047,14 +1043,10 @@ public class App extends javax.swing.JFrame {
         buttonExitBehaviour(confirmStock, confirmStockTxt, WHITE, ORIGINAL_TEXT_COLOR);
     }//GEN-LAST:event_confirmStockMouseExited
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
     private void addProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addProductMouseClicked
         // TODO add your handling code here:
         if (validItem(name.getText(), stock.getText(), price.getText())) {
-            addItem(name.getText(), stock.getText(), price.getText(),description.getText(),category.getText(),supplier.getText(),stockBound.getText());//description category supplier stockbound
+            addItem(name.getText(), stock.getText(), price.getText(), description.getText(), category.getText(), supplier.getText(), stockBound.getText());//description category supplier stockbound
             updateProducts();
             closeAfterOperation(addProduct);
             addCleanup();
@@ -1089,13 +1081,24 @@ public class App extends javax.swing.JFrame {
 
     private void searchButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchButtonMouseClicked
         // TODO add your handling code here:
-        if(products.getModel().getSize()>0){
-            
-            
-            
-        }else{
-        showError("The inventory is empty");}
+        search(searchBar, products, itemInfoTxt);
+
     }//GEN-LAST:event_searchButtonMouseClicked
+
+    private void searchBarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchBarKeyReleased
+        // TODO add your handling code here:
+        resetDisplay(evt.getKeyCode(), searchBar);
+    }//GEN-LAST:event_searchBarKeyReleased
+
+    private void itemInfoTxt1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemInfoTxt1MouseEntered
+        // TODO add your handling code here:
+        itemInfoTxt1.setCursor(NORMAL);
+    }//GEN-LAST:event_itemInfoTxt1MouseEntered
+
+    private void inventoryListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inventoryListMouseClicked
+        // TODO add your handling code here:
+        displayInfo(inventoryList.getSelectedValue(), inventoryList, itemInfoTxt1);
+    }//GEN-LAST:event_inventoryListMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1155,7 +1158,7 @@ public class App extends javax.swing.JFrame {
      * @param textColor The text color when the cursor exits.
      */
     private void buttonExitBehaviour(JPanel button, JLabel text, Color backgroundColor, Color textColor) {
-        
+
         button.setBackground(backgroundColor);
         text.setForeground(textColor);
     }
@@ -1199,13 +1202,13 @@ public class App extends javax.swing.JFrame {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 int result = JOptionPane.showConfirmDialog(window, "Do you really want to close this window?", "Confirm Exit", JOptionPane.YES_NO_OPTION);
-                
+
                 if (result == JOptionPane.YES_OPTION) {
                     openWindows--;
                     window.dispose();
                 }
             }
-            
+
         });
     }
 
@@ -1220,12 +1223,12 @@ public class App extends javax.swing.JFrame {
             return false;
         }
         try {
-            Float.valueOf(number.trim());
-            return true;
-            
+            float x = Float.parseFloat(number.trim());
+            return x >= 0;
+
         } catch (NumberFormatException e) {
             return false;
-            
+
         }
     }
 
@@ -1238,14 +1241,11 @@ public class App extends javax.swing.JFrame {
     private boolean isInt(String number) {
         try {
             int x = Integer.parseInt(number.trim());
-            if (x > 0) {
-                return true;
-            }
+            return x >= 0;
         } catch (NumberFormatException e) {
             return false;
-            
+
         }
-        return false;
     }
 
     /**
@@ -1261,22 +1261,22 @@ public class App extends javax.swing.JFrame {
             showError("The product must have a name");
             return false;
         }
-        
+
         if (stock.trim().isEmpty()) {
             showError("The item must have a stock quantity");
             return false;
         }
-        
+
         if (!isInt(stock)) {
             showError("The stock must be an integer");
             return false;
         }
-        
+
         if (price.trim().isEmpty()) {
             showError("The item must have a price");
             return false;
         }
-        
+
         if (!isFloat(price)) {
             showError("The price must be a decimal number");
             return false;
@@ -1292,22 +1292,22 @@ public class App extends javax.swing.JFrame {
      */
     private void showMessage(String message, String title, int messageType) {
         JOptionPane.showMessageDialog(null, message, title, messageType);
-        
+
     }
-    
+
     private void showError(String message) {
         showMessage(message, "Error", JOptionPane.ERROR_MESSAGE);
-        
+
     }
-    
+
     private void showWarning(String message) {
         showMessage(message, "Warning", JOptionPane.WARNING_MESSAGE);
-        
+
     }
-    
+
     private void showInfo(String message) {
         showMessage(message, "Info", JOptionPane.INFORMATION_MESSAGE);
-        
+
     }
 
     /**
@@ -1322,25 +1322,25 @@ public class App extends javax.swing.JFrame {
         boolean availability = Integer.parseInt(stock.getText()) > 0;
         inventory.put(id, createItem(nameField, stockField, priceField, description, category, supplier, stockbound, availability));
     }
-    
+
     private void updateProducts() {
         listModel.clear();
         for (Item product : inventory.values()) {
             listModel.addElement(product.getName() + " ID: " + product.getId());
-            clearInfo();
+
         }
-        
+        clearInfo();
     }
-    
+
     private void closeAfterOperation(Component component) {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(component);
         if (frame != null) {
             frame.dispose();
-            
+
         }
-        
+
     }
-    
+
     private void addCleanup() {
         name.setText("");
         description.setText("");
@@ -1351,9 +1351,9 @@ public class App extends javax.swing.JFrame {
         supplier.setText("");
         addProduct.setBackground(WHITE);
         addProductTxt.setForeground(ORIGINAL_TEXT_COLOR);
-        
+
     }
-    
+
     private void updateCleanup() {
         name1.setText("");
         description1.setText("");
@@ -1364,33 +1364,45 @@ public class App extends javax.swing.JFrame {
         supplier1.setText("");
         editProduct.setBackground(WHITE);
         editProductTxt.setForeground(ORIGINAL_TEXT_COLOR);
-        
+
     }
-    
+
     private void deleteItem(String item) {
         int itemId = extractId(item);
         if (itemId > -1) {
-            inventory.remove(itemId);
-            updateProducts();
-            clearInfo();
+            int x = JOptionPane.showConfirmDialog(manageWindow, "Are you sure you want to delete this item?", "Confirm deletion", JOptionPane.YES_NO_OPTION);
+            if (x == 0) {
+                inventory.remove(itemId);
+                updateProducts();
+                clearInfo();
+            }
         } else {
             showError("Nothing selected");
         }
     }
-    
+
     private void edit(String item) {
         int itemId = extractId(item);
         if (itemId > -1) {
-            modifyItem(inventory.get(itemId));
-            updateProducts();
-            clearInfo();
-            closeAfterOperation(editProduct);
+            if (nothingToModify()) {
+                showInfo("You must input at least one field to modify");
+
+                return;
+            }
+            if (modifyItem(inventory.get(itemId))) {
+                updateProducts();
+                clearInfo();
+                showInfo("The product has been modified");
+                closeAfterOperation(editProduct);
+
+            }
+
         } else {
             showError("Nothing selected");
         }
-        
+
     }
-    
+
     private int extractId(String item) {
         if (item != null && !item.isEmpty()) {
             final String breakpoint = " ID: ";
@@ -1400,46 +1412,68 @@ public class App extends javax.swing.JFrame {
         } else {
             return -1;
         }
-        
+
     }
-    
-    private void modifyItem(Item item) {
-        if (!name1.getText().trim().isEmpty()) {
-            item.setName(name1.getText());
+
+    private boolean modifyItem(Item item) {
+        boolean modified = false;
+        int x = JOptionPane.showConfirmDialog(manageWindow, "Are you sure you want to edit this item?", "Confirm edit", JOptionPane.YES_NO_OPTION);
+        if (x == 0) {
+            if (!name1.getText().trim().isEmpty()) {
+                item.setName(name1.getText());
+                modified = true;
+            }
+
+            if (!description1.getText().trim().isEmpty()) {
+                item.setDescription(description1.getText());
+                modified = true;
+            }
+
+            if (!category1.getText().trim().isEmpty()) {
+                item.setCategory(category1.getText());
+                modified = true;
+            }
+
+            if (!stock1.getText().trim().isEmpty() && isInt(stock1.getText())) {
+                item.setStock(Integer.parseInt(stock1.getText()));
+                modified = true;
+            } else if (!isInt(stock1.getText()) && !stock1.getText().trim().isEmpty()) {
+                showError("The new stock value is not a valid integer");
+
+            }
+
+            if (!price1.getText().trim().isEmpty() && isFloat(price1.getText())) {
+                item.setPrice(Float.parseFloat(price1.getText()));
+                modified = true;
+            } else if (!isFloat(price1.getText()) && !price1.getText().trim().isEmpty()) {
+
+                showError("The new price is not a valid decimal number");
+
+            }
+
+            if (!stockBound1.getText().trim().isEmpty() && isInt(stockBound1.getText())) {
+                item.setStockBound(Integer.parseInt(stockBound1.getText()));
+                modified = true;
+            } else if (!isInt(stockBound1.getText()) && !stockBound1.getText().trim().isEmpty()) {
+                showError("The new minimum stock value is not a valid integer");
+            }
+
+            if (!supplier1.getText().trim().isEmpty()) {
+                item.setSupplier(supplier1.getText());
+                modified = true;
+            }
         }
-        
-        if (!description1.getText().trim().isEmpty()) {
-            item.setDescription(description1.getText());
-        }
-        
-        if (!category1.getText().trim().isEmpty()) {
-            item.setCategory(category1.getText());
-        }
-        
-        if (!stock1.getText().trim().isEmpty() && isInt(stock1.getText())) {
-            item.setStock(Integer.parseInt(stock1.getText()));
-        }
-        
-        if (!price1.getText().trim().isEmpty() && isFloat(price1.getText())) {
-            item.setPrice(Float.parseFloat(price1.getText()));
-        }
-        
-        if (!stockBound1.getText().trim().isEmpty() && isInt(stockBound1.getText())) {
-            item.setStockBound(Integer.parseInt(stockBound1.getText()));
-        }
-        
-        if (!supplier1.getText().trim().isEmpty()) {
-            item.setSupplier(supplier1.getText());
-        }
+
+        return modified;
     }
-    
+
     private boolean retrieve(String item, int amount) {
         int itemId = extractId(item);
         int available = inventory.get(itemId).getStock();
         if (amount <= available) {
             inventory.get(itemId).setStock(available - amount);
             showInfo("The new stock for " + inventory.get(itemId).getName() + " is now " + inventory.get(itemId).getStock());
-            
+
         } else if (available == 0) {
             showWarning("There is no more stock left for " + inventory.get(itemId).getName());
             inventory.get(itemId).setStatus(false);
@@ -1447,11 +1481,11 @@ public class App extends javax.swing.JFrame {
         } else {
             showError("There are only " + inventory.get(itemId).getStock() + " " + inventory.get(itemId).getName() + " in stock");
             return false;
-            
+
         }
         return true;
     }
-    
+
     private boolean validateQuickAction(String selection, String ammount) {
         if (selection == null) {
             showError("Nothing selected");
@@ -1460,7 +1494,7 @@ public class App extends javax.swing.JFrame {
         if (!isInt(ammount)) {
             showError("The amount must be an integer bigger than 0");
             return false;
-            
+
         }
         if (ammount.trim().isEmpty()) {
             showError("You must introduce an amount");
@@ -1469,36 +1503,49 @@ public class App extends javax.swing.JFrame {
         clearInfo();
         return true;
     }
-    
+
     private void stock(String selection, String amount) {
         int itemId = extractId(selection);
         int currentStock = inventory.get(itemId).getStock();
         inventory.get(itemId).setStock(currentStock + Integer.parseInt(amount));
         if (inventory.get(itemId).getStatus() == false) {
             inventory.get(itemId).setStatus(true);
-            
+
         }
         showInfo("The new stock for " + inventory.get(itemId).getName() + " is now " + inventory.get(itemId).getStock());
-        
+
     }
-    
-    private void displayInfo(String selection) {
-        int itemId = extractId(selection);
-        if(inventory.get(itemId).getStockBound()>=inventory.get(itemId).getStock()){
-        showWarning("Stock for "+inventory.get(itemId).getName()+" is low");
-        
+
+    private void displayInfo(String selection, JList handler, JTextArea target) {
+        if (handler.getModel().getSize() > 0) {
+            int itemId = extractId(selection);
+            target.setText(inventory.get(itemId).toString());
+        } else {
+
+            showInfo("Add a product to start");
         }
-        itemInfoTxt.setText(inventory.get(itemId).toString());
     }
-    
+
     private void clearInfo() {
         itemInfoTxt.setText("");
+        itemInfoTxt1.setText("");
     }
-    
+
+    private void showLowStockWarning(String selection, JList handler) {
+        if (handler.getModel().getSize() > 0) {
+            int itemId = extractId(selection);
+            if (inventory.get(itemId).getStock() < inventory.get(itemId).getStockBound()) {
+                showWarning("Stock for " + inventory.get(itemId).getName() + " is low");
+
+            }
+        }
+
+    }
+
     private Item createItem(String nameField, String stockField, String priceField, String description, String category, String supplier, String stockbound, boolean availability) {
         Item item = new Item.Builder(id, nameField, Float.parseFloat(priceField), availability).stock(Integer.parseInt(stockField)).build();
         if (!description.trim().isEmpty()) {
-            
+
             item.setDescription(description);
         } else {
             item.setDescription("No description");
@@ -1510,7 +1557,7 @@ public class App extends javax.swing.JFrame {
         }
         if (!supplier.trim().isEmpty()) {
             item.setSupplier(supplier);
-            
+
         } else {
             item.setSupplier("Unknown");
         }
@@ -1519,9 +1566,67 @@ public class App extends javax.swing.JFrame {
         } else {
             item.setStockBound(1);
         }
-        
+
         return item;
-        
+
+    }
+
+    private void search(JTextField searchBar, JList list, JTextArea display) {
+        if (list.getModel().getSize() > 0) {
+            if (!searchBar.getText().trim().isEmpty()) {
+                for (Item item : inventory.values()) {
+                    if (item.getName().contains(searchBar.getText())) {
+                        String target = item.getName() + " ID: " + item.getId();
+                        list.setSelectedValue(target, true);
+                        display.setText(item.toString());
+                        return;
+
+                    }
+                }
+                showInfo("The specified item does not exist");
+
+            } else {
+                showError("The searchbar is empty");
+
+            }
+
+        } else {
+            showError("The inventory is empty");
+        }
+
+    }
+
+    public void resetDisplay(int key, JTextField bar) {
+        if (key == 127 && bar.getText().trim().isEmpty()) {
+            updateProducts();
+        }
+
+    }
+
+    private boolean nothingToModify() {
+        if (!name1.getText().equals("")) {
+            return false;
+        }
+        if (!description1.getText().equals("")) {
+            return false;
+        }
+        if (!category1.getText().equals("")) {
+            return false;
+        }
+        if (!stock1.getText().equals("")) {
+            return false;
+        }
+        if (!name1.getText().equals("")) {
+            return false;
+        }
+        if (!stockBound1.getText().equals("")) {
+            return false;
+        }
+        if (!supplier1.getText().equals("")) {
+            return false;
+        }
+
+        return true;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFrame addInventory;
@@ -1558,11 +1663,12 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JLabel editProductTxt;
     private javax.swing.JList<String> inventoryList;
     private javax.swing.JScrollPane itemInfoPane;
+    private javax.swing.JScrollPane itemInfoPane1;
     private javax.swing.JTextArea itemInfoTxt;
+    private javax.swing.JTextArea itemInfoTxt1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel mainContent;
     private javax.swing.JPanel manage;
     private javax.swing.JLabel manageTxt;
@@ -1589,6 +1695,7 @@ public class App extends javax.swing.JFrame {
     private javax.swing.JPanel rootQuickStock;
     private javax.swing.JPanel search;
     private javax.swing.JTextField searchBar;
+    private javax.swing.JTextField searchBar1;
     private javax.swing.JPanel searchButton;
     private javax.swing.JLabel searchButtonTxt;
     private javax.swing.JLabel searchTxt;
