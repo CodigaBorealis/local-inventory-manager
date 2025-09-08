@@ -929,6 +929,7 @@ public class App extends javax.swing.JFrame {
 
     private void deleteItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteItemMouseClicked
         // TODO add your handling code here:
+        deleteItem(inventoryList.getSelectedValue());
 
     }//GEN-LAST:event_deleteItemMouseClicked
 
@@ -1277,7 +1278,7 @@ public class App extends javax.swing.JFrame {
     private void updateProducts() {
         listModel.clear();
         for (Item product : inventory.values()) {
-            listModel.addElement(product.getName());
+            listModel.addElement(product.getName() + " ID: " + product.getId());
         }
 
     }
@@ -1300,7 +1301,8 @@ public class App extends javax.swing.JFrame {
         stockBound.setText("");
         supplier.setText("");
     }
-    private void updateCleanup(){
+
+    private void updateCleanup() {
         name1.setText("");
         description1.setText("");
         category1.setText("");
@@ -1308,7 +1310,20 @@ public class App extends javax.swing.JFrame {
         price1.setText("");
         stockBound1.setText("");
         supplier1.setText("");
-    
+
+    }
+
+    private void deleteItem(String item) {
+        if (item != null && !item.isEmpty()) {
+            final String breakpoint = " ID: ";
+            int index = item.lastIndexOf(breakpoint);
+            String itemId = item.substring(index + breakpoint.length()).trim();
+            inventory.remove(Integer.valueOf(itemId));
+            updateProducts();
+        } else {
+            showError("Nothing selected");
+        }
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
