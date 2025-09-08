@@ -69,7 +69,7 @@ public class Item {
         return id;
     }
 
-    public boolean isStatus() {
+    public boolean getStatus() {
         return status;
     }
 

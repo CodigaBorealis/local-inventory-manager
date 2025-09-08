@@ -18,8 +18,6 @@ public class LocalInventoryManager {
         app.setTitle("Local inventory manager");
         app.setLocationRelativeTo(null);
         app.setVisible(true);
-        Item test=new Item.Builder(0, "name", 0, true).build();
-        System.out.println(test.getName());
     }
       
 }

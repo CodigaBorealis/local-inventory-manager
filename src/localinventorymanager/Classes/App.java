@@ -27,7 +27,7 @@ public class App extends javax.swing.JFrame {
     private final Cursor NORMAL = new Cursor(Cursor.DEFAULT_CURSOR);
     private final int MAX_WINDOWS = 2;
     private int openWindows = 1;
-    private int id = 1;
+    private int id = 0;
     private DefaultListModel<String> listModel = new DefaultListModel<>();
     private Map<Integer, Item> inventory = new HashMap<>();//key=name of the item; value=the object itself
     private final Set<JFrame> closedWindows = new HashSet<>();
@@ -40,11 +40,6 @@ public class App extends javax.swing.JFrame {
 
         initComponents();
         products.setModel(listModel);
-        //DefaultListModel<String> model = new DefaultListModel<>();
-        //   for (Item item : inventory.values()) {
-        //      model.addElement(item.getName());
-        //    }
-        //  products.setModel(model);
     }
 
     /**
@@ -377,7 +372,7 @@ public class App extends javax.swing.JFrame {
 
         ammountStockedLabel.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         ammountStockedLabel.setForeground(new java.awt.Color(255, 255, 255));
-        ammountStockedLabel.setText("Ammount stocked");
+        ammountStockedLabel.setText("Ammount added");
 
         javax.swing.GroupLayout rootQuickStockLayout = new javax.swing.GroupLayout(rootQuickStock);
         rootQuickStock.setLayout(rootQuickStockLayout);
@@ -909,7 +904,11 @@ public class App extends javax.swing.JFrame {
 
     private void quickStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickStockMouseClicked
         // TODO add your handling code here:
-        openWindow(quickStockWindow, "Quick stock", 250, 500);
+        if (products.getSelectedValue() != null) {
+            openWindow(quickStockWindow, "Quick stock", 250, 500);
+        } else {
+            showError("Nothing selected");
+        }
     }//GEN-LAST:event_quickStockMouseClicked
 
     private void manageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_manageMouseClicked
@@ -919,7 +918,11 @@ public class App extends javax.swing.JFrame {
 
     private void quickSellMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_quickSellMouseClicked
         // TODO add your handling code here:
-        openWindow(quickSellWindow, "Quick sell", 250, 500);
+        if (products.getSelectedValue() != null) {
+            openWindow(quickSellWindow, "Quick retrieve", 250, 500);
+        } else {
+            showError("Nothing selected");
+        }
     }//GEN-LAST:event_quickSellMouseClicked
 
     private void itemInfoTxtMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemInfoTxtMouseEntered
@@ -994,6 +997,12 @@ public class App extends javax.swing.JFrame {
 
     private void confirmSellMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmSellMouseClicked
         // TODO add your handling code here:
+        if (validateQuickAction(products.getSelectedValue(), ammountToSell.getText())) {
+            if (retrieve(products.getSelectedValue(), Integer.parseInt(ammountToSell.getText()))) {
+                closeAfterOperation(confirmSell);
+            }
+            ammountToSell.setText("");
+        }
     }//GEN-LAST:event_confirmSellMouseClicked
 
     private void confirmSellMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmSellMouseEntered
@@ -1008,6 +1017,11 @@ public class App extends javax.swing.JFrame {
 
     private void confirmStockMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmStockMouseClicked
         // TODO add your handling code here:
+        if (validateQuickAction(products.getSelectedValue(), ammountToStock.getText())) {
+            stock(products.getSelectedValue(), ammountToStock.getText());
+            ammountToStock.setText("");
+            closeAfterOperation(confirmStock);
+        }
     }//GEN-LAST:event_confirmStockMouseClicked
 
     private void confirmStockMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_confirmStockMouseEntered
@@ -1047,6 +1061,7 @@ public class App extends javax.swing.JFrame {
     private void editProductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductMouseClicked
         // TODO add your handling code here:
         edit(inventoryList.getSelectedValue());
+        updateCleanup();
     }//GEN-LAST:event_editProductMouseClicked
 
     private void editProductMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editProductMouseEntered
@@ -1199,13 +1214,15 @@ public class App extends javax.swing.JFrame {
      */
     private boolean isInt(String number) {
         try {
-            Integer.valueOf(number.trim());
-            return true;
-
+            int x = Integer.parseInt(number.trim());
+            if (x > 0) {
+                return true;
+            }
         } catch (NumberFormatException e) {
             return false;
 
         }
+        return false;
     }
 
     /**
@@ -1308,6 +1325,9 @@ public class App extends javax.swing.JFrame {
         price.setText("");
         stockBound.setText("");
         supplier.setText("");
+        addProduct.setBackground(WHITE);
+        addProductTxt.setForeground(ORIGINAL_TEXT_COLOR);
+
     }
 
     private void updateCleanup() {
@@ -1318,6 +1338,8 @@ public class App extends javax.swing.JFrame {
         price1.setText("");
         stockBound1.setText("");
         supplier1.setText("");
+        editProduct.setBackground(WHITE);
+        editProductTxt.setForeground(ORIGINAL_TEXT_COLOR);
 
     }
 
@@ -1355,36 +1377,84 @@ public class App extends javax.swing.JFrame {
 
     }
 
-private void modifyItem(Item item) {
-    if (!name1.getText().trim().isEmpty()) {
-        item.setName(name1.getText());
+    private void modifyItem(Item item) {
+        if (!name1.getText().trim().isEmpty()) {
+            item.setName(name1.getText());
+        }
+
+        if (!description1.getText().trim().isEmpty()) {
+            item.setDescription(description1.getText());
+        }
+
+        if (!category1.getText().trim().isEmpty()) {
+            item.setCategory(category1.getText());
+        }
+
+        if (!stock1.getText().trim().isEmpty() && isInt(stock1.getText())) {
+            item.setStock(Integer.parseInt(stock1.getText()));
+        }
+
+        if (!price1.getText().trim().isEmpty() && isFloat(price1.getText())) {
+            item.setPrice(Float.parseFloat(price1.getText()));
+        }
+
+        if (!stockBound1.getText().trim().isEmpty() && isInt(stockBound1.getText())) {
+            item.setStockBound(Integer.parseInt(stockBound1.getText()));
+        }
+
+        if (!supplier1.getText().trim().isEmpty()) {
+            item.setSupplier(supplier1.getText());
+        }
     }
 
-    if (!description1.getText().trim().isEmpty()) {
-        item.setDescription(description1.getText());
+    private boolean retrieve(String item, int amount) {
+        int itemId = extractId(item);
+        int available = inventory.get(itemId).getStock();
+        if (amount <= available) {
+            inventory.get(itemId).setStock(available - amount);
+            showInfo("The new stock for " + inventory.get(itemId).getName() + " is now " + inventory.get(itemId).getStock());
+
+        } else if (available == 0) {
+            showWarning("There is no more stock left for " + inventory.get(itemId).getName());
+            inventory.get(itemId).setStatus(false);
+            return false;
+        } else {
+            showError("There are only " + inventory.get(itemId).getStock() + " " + inventory.get(itemId).getName() + " in stock");
+            return false;
+
+        }
+        return true;
     }
 
-    if (!category1.getText().trim().isEmpty()) {
-        item.setCategory(category1.getText());
+    private boolean validateQuickAction(String selection, String ammount) {
+        if (selection == null) {
+            showError("Nothing selected");
+            return false;
+        }
+        if (!isInt(ammount)) {
+            showError("The amount must be an integer bigger than 0");
+            return false;
+
+        }
+        if (ammount.trim().isEmpty()) {
+            showError("You must introduce an amount");
+            return false;
+        }
+
+        return true;
     }
 
-    if (!stock1.getText().trim().isEmpty() && isInt(stock1.getText())) {
-        item.setStock(Integer.parseInt(stock1.getText()));
-    }
+    private void stock(String selection, String amount) {
+        int itemId = extractId(selection);
+        int currentStock = inventory.get(itemId).getStock();
+        inventory.get(itemId).setStock(currentStock + Integer.parseInt(amount));
+        if (inventory.get(itemId).getStatus() == false) {
+            inventory.get(itemId).setStatus(true);
 
-    if (!price1.getText().trim().isEmpty() && isFloat(price1.getText())) {
-        item.setPrice(Float.parseFloat(price1.getText()));
-    }
+        }
+        showInfo("The new stock for " + inventory.get(itemId).getName() + " is now " + inventory.get(itemId).getStock());
 
-    if (!stockBound1.getText().trim().isEmpty() && isInt(stockBound1.getText())) {
-        item.setStockBound(Integer.parseInt(stockBound1.getText()));
     }
-
-    if (!supplier1.getText().trim().isEmpty()) {
-        item.setSupplier(supplier1.getText());
-    }
-}
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFrame addInventory;
     private javax.swing.JPanel addInventoryRoot;
