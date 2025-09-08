@@ -9,8 +9,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- *
- * @author XD
+ *Checks if the storage folder and inventory file exists.
+ * Creates it if it does not.
+ * @author CodigaBorealis.
  */
 public class StorageChecker {
 

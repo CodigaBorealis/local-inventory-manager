@@ -4,8 +4,8 @@
  */
 package localinventorymanager.Classes;
 /**
- *
- * @author XD
+ *The main class.
+ * @author CodigaBorealis.
  */
 public class LocalInventoryManager {
 

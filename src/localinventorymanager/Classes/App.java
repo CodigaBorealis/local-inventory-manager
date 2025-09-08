@@ -22,23 +22,23 @@ import java.util.Set;
 
 /**
  *
- * @author XD
+ * @author CodigaBorealis.
  */
 public class App extends javax.swing.JFrame {
-
+    //styling constants
     private final Color WHITE = new Color(255, 255, 255);
     private final Color HOVER_COLOR = new Color(99, 190, 255);
     private final Color ORIGINAL_TEXT_COLOR = new Color(0, 102, 204);
     private final Cursor HAND = new Cursor(Cursor.HAND_CURSOR);
     private final Cursor NORMAL = new Cursor(Cursor.DEFAULT_CURSOR);
-    private int id;
-    private DefaultListModel<String> listModel = new DefaultListModel<>();
-    private Map<Integer, Item> inventory = new HashMap<>();//key=name of the item; value=the object itself
-    private final Set<JFrame> closedWindows = new HashSet<>();
-    File inventoryJson = new File("storage/inventory.json");
-//TODO TODO TODO TODO:
-    //SAVE AND LOAD INFO FROM A JSON FILE
-
+    
+    
+    //useful variables
+    private int id;//used to manage the ids of the items.
+    private DefaultListModel<String> listModel = new DefaultListModel<>();//used as the list model for the JLists that display the inventory.
+    private Map<Integer, Item> inventory = new HashMap<>();//key=name of the item; value=the object itself.
+    private final Set<JFrame> closedWindows = new HashSet<>();//used to manage the amount of windows opened at any given time.
+    File inventoryJson = new File("storage/inventory.json");//loads up the inventory file.
     /**
      * Creates new form App
      */
@@ -1094,7 +1094,6 @@ public class App extends javax.swing.JFrame {
 
     private void searchBarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchBarKeyReleased
         // TODO add your handling code here:
-        resetDisplay(evt.getKeyCode(), searchBar);
     }//GEN-LAST:event_searchBarKeyReleased
 
     private void itemInfoTxt1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemInfoTxt1MouseEntered
@@ -1325,6 +1324,10 @@ public class App extends javax.swing.JFrame {
         saveInventory(inventoryJson);
     }
 
+    /**
+     * Update the listModel to display the changes made to the inventory
+     *
+     */
     private void updateProducts() {
         listModel.clear();
         for (Item product : inventory.values()) {
@@ -1334,6 +1337,13 @@ public class App extends javax.swing.JFrame {
         clearInfo();
     }
 
+    /**
+     * Overrides the default close operation. Asks for confirmation before
+     * closing a window.
+     *
+     * @param component the window itself.
+     *
+     */
     private void closeAfterOperation(Component component) {
         JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(component);
         if (frame != null) {
@@ -1343,6 +1353,10 @@ public class App extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Cleans up the add window input fields after adding an item.
+     *
+     */
     private void addCleanup() {
         name.setText("");
         description.setText("");
@@ -1356,6 +1370,10 @@ public class App extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Cleans up the update window input fields after updating an item.
+     *
+     */
     private void updateCleanup() {
         name1.setText("");
         description1.setText("");
@@ -1369,6 +1387,12 @@ public class App extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Deletes an item from the inventory.
+     *
+     * @param item the string containing the name of the item.
+     *
+     */
     private void deleteItem(String item) {
         int itemId = extractId(item);
         if (itemId > -1) {
@@ -1385,6 +1409,12 @@ public class App extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Validates the modification of an item
+     *
+     * @param item the string containing the name of the item.
+     *
+     */
     private void edit(String item) {
         int itemId = extractId(item);
         if (itemId > -1) {
@@ -1407,6 +1437,13 @@ public class App extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Extracts the id from the name of an item. Used to get the key linked to
+     * an item.
+     *
+     * @param item the string containing the name of the item.
+     *
+     */
     private int extractId(String item) {
         if (item != null && !item.isEmpty()) {
             final String breakpoint = " ID: ";
@@ -1419,6 +1456,12 @@ public class App extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Handles the modification logic of an item.
+     *
+     * @param item the item to modify.
+     *
+     */
     private boolean modifyItem(Item item) {
         boolean modified = false;
         int x = JOptionPane.showConfirmDialog(manageWindow, "Are you sure you want to edit this item?", "Confirm edit", JOptionPane.YES_NO_OPTION);
@@ -1472,6 +1515,14 @@ public class App extends javax.swing.JFrame {
         return modified;
     }
 
+    /**
+     * Used on the quick retrieve button. Sustracts a given ammount from an
+     * item. Shows an error message if doing so is not possible.
+     *
+     * @param item the name of the item.
+     * @param amount the amount to retrieve.
+     *
+     */
     private boolean retrieve(String item, int amount) {
         int itemId = extractId(item);
         int available = inventory.get(itemId).getStock();
@@ -1492,6 +1543,14 @@ public class App extends javax.swing.JFrame {
         return true;
     }
 
+    /**
+     * Validates any action made from the quick retrieve and quick stock buttons
+     *
+     * @param selection the String representing the name of a selected item in
+     * the JList.
+     * @param amount the amount to retrieve or add.
+     *
+     */
     private boolean validateQuickAction(String selection, String ammount) {
         if (selection == null) {
             showError("Nothing selected");
@@ -1510,6 +1569,15 @@ public class App extends javax.swing.JFrame {
         return true;
     }
 
+    /**
+     * Adds a given amount of stock to an item. Makes an item available if it is
+     * restocked.
+     *
+     * @param selection the String representing the name of a selected item in
+     * the JList.
+     * @param amount the amount to add.
+     *
+     */
     private void stock(String selection, String amount) {
         int itemId = extractId(selection);
         int currentStock = inventory.get(itemId).getStock();
@@ -1524,6 +1592,15 @@ public class App extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Shows the information about an item in a given JTextArea.
+     *
+     * @param selection the String representing the name of a selected item in
+     * the JList.
+     * @param handler the JList handler.
+     * @param target the JTextArea used to display.
+     *
+     */
     private void displayInfo(String selection, JList handler, JTextArea target) {
         if (handler.getModel().getSize() > 0) {
             int itemId = extractId(selection);
@@ -1534,11 +1611,22 @@ public class App extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Clears the information being displayed on the JTextArea(s).
+     *
+     */
     private void clearInfo() {
         itemInfoTxt.setText("");
         itemInfoTxt1.setText("");
     }
 
+    /**
+     * Shows a warning if the stock of an item is below the minimum ammount
+     *
+     * @param selection the String containing the name of an item.
+     * @param handler the JList the item is in.
+     *
+     */
     private void showLowStockWarning(String selection, JList handler) {
         if (handler.getModel().getSize() > 0) {
             int itemId = extractId(selection);
@@ -1550,6 +1638,20 @@ public class App extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Manages the item creation logic.
+     *
+     * @param nameField the String representing the name.
+     * @param stockField the int representing the amount of a given product that
+     * is available.
+     * @param priceField the float representing the price of an item.
+     * @param description the String representing the description of an item.
+     * @param supplier the String representing the supplier of an item.
+     * @param stockBound the int representing the minimum amount of a product
+     * that should be in inventory.
+     * @param availability the boolean representing if an item is available.
+     *
+     */
     private Item createItem(String nameField, String stockField, String priceField, String description, String category, String supplier, String stockbound, boolean availability) {
         Item item = new Item.Builder(id, nameField, Float.parseFloat(priceField), availability).stock(Integer.parseInt(stockField)).build();
         if (!description.trim().isEmpty()) {
@@ -1579,6 +1681,15 @@ public class App extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Manages the search logic for the search buttons
+     *
+     * @param searchBar the JTextField used as a searchbar.
+     * @param list the JList to be searched on.
+     * @param display the JTextArea to display the information of the found item
+     * on.
+     *
+     */
     private void search(JTextField searchBar, JList list, JTextArea display) {
         if (list.getModel().getSize() > 0) {
             if (!searchBar.getText().trim().isEmpty()) {
@@ -1604,12 +1715,11 @@ public class App extends javax.swing.JFrame {
 
     }
 
-    public void resetDisplay(int key, JTextField bar) {
-        if (key == 127 && bar.getText().trim().isEmpty()) {
-            updateProducts();
-        }
-
-    }
+    /**
+     * Checks if any of the fields inside the edit window has text. returns
+     * false if there is text;returns true otherwise.
+     *
+     */
 
     private boolean nothingToModify() {
         if (!name1.getText().equals("")) {
@@ -1637,6 +1747,12 @@ public class App extends javax.swing.JFrame {
         return true;
     }
 
+    /**
+     * Save the inventory onto a JSON file using the Gson library.
+     *
+     * @param inventoryJson the JSON file where the inventory is stored.
+     *
+     */
     private void saveInventory(File inventoryJson) {
         Gson gson = new Gson();
 
@@ -1649,6 +1765,11 @@ public class App extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Loads up the inventory from a JSON file using the Gson library.
+     * @param inventoryJson the JSON file where the inventory is stored.
+     *
+     */
     private void loadInventory(File inventoryJson) {
         Gson parser = new Gson();
         try (FileReader reader = new FileReader(inventoryJson)) {
@@ -1666,6 +1787,12 @@ public class App extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Gets the last id stored inside the JSON containing the inventory returns
+     * 1 if the file does not contain any element; returns the last id used
+     * otherwise.
+     *
+     */
     private int getLastId() {
         int lastId = 1;
         if (!inventory.isEmpty()) {
